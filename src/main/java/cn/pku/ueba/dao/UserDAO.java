@@ -7,6 +7,9 @@ public interface UserDAO {
 	public User getUser(String name);
 
 	// 创建用户并存储到数据库中
-	public User createUser(String name);
+	// public User createUser(String name);
+
+	// 从数据库中删除用户
+	public void deleteUser(String name);
 
 }

@@ -20,13 +20,18 @@ import cn.pku.ueba.util.GrayLogUtil;
 
 public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 
-	static String index = "GrayLog_0";
+	static String index = "graylog_0";
 	static String type = "message";
 
 	// 将活动存储到GrayLog中
 	public void index(ActivityRecord activityrecord) {
 		Map<String, Object> json = ActivityRecordFactory.getJSONFromActivityRecord(activityrecord);
-		GrayLogUtil.index(index, type, json);
+		try {
+			GrayLogUtil.index(index, type, json);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -49,11 +54,11 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 			response = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter, 60);
 
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// 将response转换为ActivityRecord
 		for (SearchHit hit : response.getHits()) {
+			
 
 		}
 

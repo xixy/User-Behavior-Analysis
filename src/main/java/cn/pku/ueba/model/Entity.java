@@ -9,7 +9,7 @@ package cn.pku.ueba.model;
 public abstract class Entity {
 	private Integer id;// 实体id
 	private EntityType type;// Entity type
-	private float riskscore;// risk score
+	private Double riskscore;// risk score
 	private String name;// 名称，例如张三或计算机1
 
 	public Integer getId() {
@@ -28,11 +28,11 @@ public abstract class Entity {
 		this.type = type;
 	}
 
-	public float getRiskscore() {
+	public Double getRiskscore() {
 		return riskscore;
 	}
 
-	public void setRiskscore(float riskscore) {
+	public void setRiskscore(Double riskscore) {
 		this.riskscore = riskscore;
 	}
 

@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Map;
 
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -37,17 +38,28 @@ public class GrayLogUtil {
 	 */
 	public static SearchResponse search(String index, String type, SearchType searchtype, QueryBuilder queryterm,
 			QueryBuilder filter, int size) throws UnknownHostException {
-		SearchResponse response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype)
-				.setQuery(queryterm).setPostFilter(filter).setFrom(0).setSize(size).setExplain(true).execute()
-				.actionGet();
+		SearchResponse response = null;
+		if (filter != null)
+			response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
+					.setPostFilter(filter).setFrom(0).setSize(size).setExplain(true).execute().actionGet();
+		else
+			response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
+					.setFrom(0).setSize(size).setExplain(true).execute().actionGet();
 		return response;
 	}
 
 	/*
 	 * 存储语句
 	 */
-	public static IndexResponse index(String index, String type, Map<String, Object> json) {
-		IndexResponse response = client.prepareIndex(index, type).setSource(json).get();
+	public static IndexResponse index(String index, String type, Map<String, Object> json) throws UnknownHostException {
+
+		IndexResponse response = getClient().prepareIndex(index, type).setSource(json).get();
+		return response;
+
+	}
+
+	public static DeleteResponse delete(String index, String type, String id) {
+		DeleteResponse response = client.prepareDelete(index, type, id).get();
 		return response;
 
 	}

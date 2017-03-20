@@ -13,6 +13,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
 import cn.pku.ueba.dao.factory.ActivityRecordFactory;
+import cn.pku.ueba.dao.impl.ActivityRecordDAOImpl;
 import cn.pku.ueba.model.ActivityRecord;
 import cn.pku.ueba.model.ActivityType;
 import cn.pku.ueba.model.Host;
@@ -28,7 +29,6 @@ public class ADActivityRecordProducer extends ActivityRecordProducer {
 
 	public static void main(String[] args) {
 		ADActivityRecordProducer arp = new ADActivityRecordProducer();
-
 		System.out.println(arp.index);
 	}
 
@@ -44,13 +44,10 @@ public class ADActivityRecordProducer extends ActivityRecordProducer {
 		QueryBuilder queryterm = QueryBuilders.termQuery("winlogbeat_task", "Kerberos 身份验证服务");
 		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 				.gt(DateUtil.getLastDayESDate(3));// 过去一小时吧还是todo
-
 		SearchResponse response = null;
-
 		try {
 			response = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter, 60);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -77,6 +74,8 @@ public class ADActivityRecordProducer extends ActivityRecordProducer {
 				ActivityType type = null;
 				// todo 生成ar
 				ActivityRecord ar = ActivityRecordFactory.getActivityRecord(user, host, date, type);
+				// 将活动记录持久化到graylog中
+				new ActivityRecordDAOImpl().index(ar);
 				records.add(ar);
 			}
 		}
