@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -57,6 +58,8 @@ public class GrayLogUtilTest {
 				String id = hit.getId();
 				GrayLogUtil.delete(index, type, id);
 			}
+		else
+			fail("GrayLogUtil cannot delete");
 	}
 
 }
