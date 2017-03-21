@@ -14,6 +14,7 @@ import org.elasticsearch.search.SearchHit;
 
 import cn.pku.ueba.dao.factory.ActivityRecordFactory;
 import cn.pku.ueba.dao.impl.ActivityRecordDAOImpl;
+import cn.pku.ueba.dao.impl.UserDAOImpl;
 import cn.pku.ueba.model.ActivityRecord;
 import cn.pku.ueba.model.ActivityType;
 import cn.pku.ueba.model.Host;
@@ -68,7 +69,9 @@ public class ADActivityRecordProducer extends ActivityRecordProducer {
 				String userid = source.get(ADLogField.targetsid).toString();
 				// 提取serviceID
 				String serviceid = source.get(ADLogField.servicesid).toString();
-				User user = null;
+				// 获取用户，这里可能获取到为null，我们假设所有的user都存进去了
+				User user = new UserDAOImpl().getUser(account);
+				// 
 				Host host = null;
 				Date date = null;
 				ActivityType type = null;
