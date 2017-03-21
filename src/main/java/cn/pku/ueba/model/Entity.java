@@ -8,9 +8,9 @@ package cn.pku.ueba.model;
  */
 public abstract class Entity {
 	private Integer id;// 实体id
-	private EntityType type;// Entity type
 	private Double riskscore;// risk score
 	private String name;// 名称，例如张三或计算机1
+	private String department;
 
 	public Integer getId() {
 		return id;
@@ -18,14 +18,6 @@ public abstract class Entity {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public EntityType getType() {
-		return type;
-	}
-
-	public void setType(EntityType type) {
-		this.type = type;
 	}
 
 	public Double getRiskscore() {
@@ -42,5 +34,13 @@ public abstract class Entity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
 	}
 }

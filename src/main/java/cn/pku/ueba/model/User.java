@@ -1,18 +1,10 @@
 package cn.pku.ueba.model;
 
 public class User extends Entity {
-	private String department;
 	private String job;
 	private Integer age;
 	private String sex;
 
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
 
 	public String getJob() {
 		return job;
