@@ -12,4 +12,7 @@ public interface UserDAO {
 	// 从数据库中删除用户
 	public void deleteUser(String name);
 
+	// 将user存储到graylog中
+	public void indexUser(User user);
+
 }

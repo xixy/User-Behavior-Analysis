@@ -20,33 +20,6 @@ public class UserDAOImpl implements UserDAO {
 	static String index = "graylog_0";
 	static String type = "user";
 
-//	/*
-//	 * 创建用户并且存入到graylog中(non-Javadoc)
-//	 * 
-//	 * @see cn.pku.ueba.dao.UserDAO#createUser(java.lang.String)
-//	 */
-//	public User createUser(String name) {
-//		User user;
-//		// 首先查看是否有相同名称的用户
-//		user = getUser(name);
-//		if (user != null)
-//			return user;
-//		// 新建用户
-//		user = UserFactory.getUser(name);
-//		// 插入到graylog中
-//		Map<String, Object> json = new HashMap<String, Object>();
-//		json.put("name", user.getName());
-//		json.put("id", user.getId());
-//		json.put("risk", user.getRiskscore());
-//		try {
-//			GrayLogUtil.index(index, type, json);
-//		} catch (UnknownHostException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return user;
-//	}
-
 	/*
 	 * 创建用户并且存入到graylog中(non-Javadoc)
 	 * 
@@ -105,6 +78,7 @@ public class UserDAOImpl implements UserDAO {
 				// id
 				Integer id = (Integer) fields.get(UserLogField.id);
 				user.setId(id);
+				break;
 
 			}
 
