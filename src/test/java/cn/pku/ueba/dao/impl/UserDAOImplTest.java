@@ -5,11 +5,14 @@ import static org.junit.Assert.fail;
 import java.net.UnknownHostException;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import cn.pku.ueba.dao.factory.UserFactory;
 import cn.pku.ueba.model.User;
 
+@FixMethodOrder(MethodSorters.JVM)
 public class UserDAOImplTest {
 	UserDAOImpl ud = new UserDAOImpl();
 
