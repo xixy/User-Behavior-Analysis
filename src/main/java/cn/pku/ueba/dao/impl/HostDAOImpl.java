@@ -21,6 +21,14 @@ public class HostDAOImpl implements HostDAO {
 	static String index = "graylog_0";
 	static String type = "host";
 
+	private static HostDAOImpl instance;
+
+	public static HostDAOImpl getInstance() {
+		if (instance == null)
+			instance = new HostDAOImpl();
+		return instance;
+	}
+
 	public void indexHost(Host host) {
 		// 插入到graylog中
 		Map<String, Object> json = new HashMap<String, Object>();

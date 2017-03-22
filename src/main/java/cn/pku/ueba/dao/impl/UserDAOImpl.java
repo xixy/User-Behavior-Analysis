@@ -20,6 +20,15 @@ public class UserDAOImpl implements UserDAO {
 	static String index = "graylog_0";
 	static String type = "user";
 
+	private static UserDAOImpl instance;
+
+	public static UserDAOImpl getInstance() {
+		if (instance == null)
+			instance = new UserDAOImpl();
+		return instance;
+
+	}
+
 	/*
 	 * 创建用户并且存入到graylog中(non-Javadoc)
 	 * 

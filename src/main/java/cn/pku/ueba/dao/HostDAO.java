@@ -3,12 +3,13 @@ package cn.pku.ueba.dao;
 import cn.pku.ueba.model.Host;
 
 public interface HostDAO {
-	// 从数据库中提取用户
+	// 从数据库中提取host
 	public Host getHost(String name);
 
-	// 从数据库中删除用户
+	// 从数据库中删除host
 	public void deleteHost(String name);
-	
+
+	// 将host持久化
 	public void indexHost(Host host);
 
 }

@@ -1,0 +1,1 @@
+将raw log与activitytype需要对应起来，然后来获取相应的ActivityRecordFactory对象

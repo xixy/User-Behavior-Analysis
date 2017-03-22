@@ -12,18 +12,20 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
-import cn.pku.ueba.dao.factory.ActivityRecordFactory;
+import cn.pku.ueba.dao.factory.ARFFactory;
 import cn.pku.ueba.dao.impl.ActivityRecordDAOImpl;
+import cn.pku.ueba.dao.impl.HostDAOImpl;
 import cn.pku.ueba.dao.impl.UserDAOImpl;
-import cn.pku.ueba.model.ActivityRecord;
-import cn.pku.ueba.model.ActivityType;
 import cn.pku.ueba.model.Host;
 import cn.pku.ueba.model.User;
+import cn.pku.ueba.model.activity.ActivityRecord;
+import cn.pku.ueba.model.activity.ActivityType;
 import cn.pku.ueba.resource.ADLogField;
 import cn.pku.ueba.service.ActivityRecordProducer;
 import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 
+@Deprecated
 public class ADActivityRecordProducer extends ActivityRecordProducer {
 	public String index = "graylog_0";
 	public String type = "message";
@@ -70,13 +72,17 @@ public class ADActivityRecordProducer extends ActivityRecordProducer {
 				// 提取serviceID
 				String serviceid = source.get(ADLogField.servicesid).toString();
 				// 获取用户，这里可能获取到为null，我们假设所有的user都存进去了
-				User user = new UserDAOImpl().getUser(account);
-				// 
-				Host host = null;
+				User user = UserDAOImpl.getInstance().getUser(account);
+				// 获取主机
+				Host host = new HostDAOImpl().getHost(ipaddress);
+				// 产生日期
 				Date date = null;
-				ActivityType type = null;
-				// todo 生成ar
-				ActivityRecord ar = ActivityRecordFactory.getActivityRecord(user, host, date, type);
+				// 活动类型
+
+				ActivityType type = ActivityType.hostlogin;
+				// 生成ar
+				ActivityRecord ar = ARFFactory.getInstance(type).getActivityRecord();
+				// 填充字段
 				// 将活动记录持久化到graylog中
 				new ActivityRecordDAOImpl().index(ar);
 				records.add(ar);

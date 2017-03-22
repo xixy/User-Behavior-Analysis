@@ -1,9 +1,11 @@
-package cn.pku.ueba.model;
+package cn.pku.ueba.model.feature;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.TreeSet;
+
+import cn.pku.ueba.model.Entity;
 
 public class FeatureVector {
 	public TreeSet<Feature> features;

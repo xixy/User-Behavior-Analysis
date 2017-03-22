@@ -12,9 +12,11 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
 import cn.pku.ueba.dao.ActivityRecordDAO;
+import cn.pku.ueba.dao.factory.ARFFactory;
 import cn.pku.ueba.dao.factory.ActivityRecordFactory;
-import cn.pku.ueba.model.ActivityRecord;
 import cn.pku.ueba.model.User;
+import cn.pku.ueba.model.activity.ActivityRecord;
+import cn.pku.ueba.model.activity.ActivityType;
 import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 
@@ -23,20 +25,33 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 	static String index = "graylog_0";
 	static String type = "message";
 
-	// 将活动存储到GrayLog中
-	public void index(ActivityRecord activityrecord) {
-		Map<String, Object> json = ActivityRecordFactory.getJSONFromActivityRecord(activityrecord);
+	/*
+	 * 获取到合适的ActivityRecordFactory对象
+	 */
+	public ActivityRecordFactory getActivityRecordFactory(ActivityType type) {
+		return ARFFactory.getInstance(type);
+
+	}
+
+	/*
+	 * 将活动存储到GrayLog中，这个方法基本上不需要修改(non-Javadoc)
+	 * 
+	 * @see cn.pku.ueba.dao.ActivityRecordDAO#index(cn.pku.ueba.model.activity.
+	 * ActivityRecord)
+	 */
+	public void index(ActivityRecord activityRecord) {
+		Map<String, Object> json = getActivityRecordFactory(activityRecord.getType())
+				.getJsonFromActivityRecord(activityRecord);
 		try {
 			GrayLogUtil.index(index, type, json);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
 	/*
-	 * 获取用户过去几天的活动 interval = -1表示所有活动；否则就是过去inteval天的活动 (non-Javadoc)
+	 * 获取用户过去几天的活动 interval = -1表示所有活动；否则就是过去inteval天的活动 用户可能有多种活动 (non-Javadoc)
 	 * 
 	 * @see
 	 * cn.pku.ueba.dao.ActivityRecordDAO#getActivityRecordByUser(cn.pku.ueba.
@@ -56,9 +71,17 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		// 将response转换为ActivityRecord
+		// 将response转换为ActivityRecord，这里也需要一个方法吧，比较底层的方法
 		for (SearchHit hit : response.getHits()) {
-			
+			// 首先得到一个JSON
+			Map<String, Object> json = hit.getSource();
+			// 然后将JSON转化为活动
+			// 这里需要把日志对应到活动类型
+			ActivityType type = ActivityType.ad;
+			ActivityRecord ar = getActivityRecordFactory(type).getActivityRecordFromJson(json);
+			// todo
+
+			ars.add(ar);
 
 		}
 

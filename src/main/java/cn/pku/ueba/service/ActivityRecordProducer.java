@@ -2,7 +2,7 @@ package cn.pku.ueba.service;
 
 import java.util.List;
 
-import cn.pku.ueba.model.ActivityRecord;
+import cn.pku.ueba.model.activity.ActivityRecord;
 
 public abstract class ActivityRecordProducer {
 	/*
