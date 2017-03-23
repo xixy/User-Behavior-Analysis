@@ -1,11 +1,10 @@
+/**
+ * 实体的抽象类，继承的类包括 User Host 以后慢慢加 
+ * @author xixy10@foxmail.com
+ * @version V0.1 2017年3月23日 下午7:10:24
+ */
 package cn.pku.ueba.model;
 
-/*
- * show 实体的抽象类，集成的类包括 User Host 以后慢慢加 
- * @author xixiangyu
- * @Time 2017-3-11
- * @Version 0.1
- */
 public abstract class Entity {
 	private Integer id;// 实体id
 	private Double riskscore;// risk score

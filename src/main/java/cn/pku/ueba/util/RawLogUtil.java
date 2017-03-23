@@ -1,3 +1,7 @@
+/**
+ * @author xixy10@foxmail.com
+ * @version V0.1 2017年3月23日 下午7:10:24
+ */
 package cn.pku.ueba.util;
 
 import java.util.Map;
@@ -8,10 +12,17 @@ import cn.pku.ueba.model.activity.ActivityType;
 
 /**
  * 用来处理日志的类
+ * 
+ * @author xixy
+ * @version 0.1
  */
 public class RawLogUtil {
 	/**
 	 * 用来判断原始日志的类型，还没有做完
+	 * 
+	 * @param json
+	 *            原始日志的json格式
+	 * @return 返回该日志对应的活动类型
 	 */
 	public static ActivityType getActivityTypeFromRawLogItem(Map<String, Object> json) {
 		return ActivityType.ad;
@@ -21,7 +32,9 @@ public class RawLogUtil {
 	/**
 	 * 判断是否为合法IP
 	 * 
-	 * @return the ip
+	 * @param ipAddress
+	 *            ip地址字符串
+	 * @return 字符串是否为ip
 	 */
 	public static boolean isBoolIp(String ipAddress) {
 		String regex = "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}";

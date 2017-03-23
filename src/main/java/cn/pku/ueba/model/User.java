@@ -1,10 +1,19 @@
+/**
+ * @author xixy10@foxmail.com
+ * @version V0.1 2017年3月23日 下午7:10:24
+ */
 package cn.pku.ueba.model;
 
+/**
+ * 用户模型
+ * 
+ * @author xixy
+ * @version 0.1
+ */
 public class User extends Entity {
 	private String job;
 	private Integer age;
 	private String sex;
-
 
 	public String getJob() {
 		return job;
