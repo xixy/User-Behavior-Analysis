@@ -13,5 +13,6 @@ public interface ActivityRecordDAO {
 	public List<ActivityRecord> getActivityRecordByUser(User user, int interval);
 
 	// 返回过去时间段的所有活动
+	public List<ActivityRecord> getActivityRecord(int interval);
 
 }

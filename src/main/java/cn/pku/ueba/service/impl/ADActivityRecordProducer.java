@@ -81,7 +81,7 @@ public class ADActivityRecordProducer extends ActivityRecordProducer {
 
 				ActivityType type = ActivityType.hostlogin;
 				// 生成ar
-				ActivityRecord ar = ARFFactory.getInstance(type).getActivityRecord();
+				ActivityRecord ar = ARFFactory.getActivityRecordFactoryInstance(type).getActivityRecord();
 				// 填充字段
 				// 将活动记录持久化到graylog中
 				new ActivityRecordDAOImpl().index(ar);

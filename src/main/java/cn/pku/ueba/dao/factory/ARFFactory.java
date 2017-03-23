@@ -9,7 +9,7 @@ public class ARFFactory {
 	/*
 	 * 返回得到相应活动类型的工厂类
 	 */
-	public static ActivityRecordFactory getInstance(ActivityType type) {
+	public static ActivityRecordFactory getActivityRecordFactoryInstance(ActivityType type) {
 
 		ActivityRecordFactory arf = null;
 		switch (type) {
