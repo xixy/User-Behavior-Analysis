@@ -21,18 +21,35 @@ import cn.pku.ueba.model.HostType;
 import cn.pku.ueba.resource.HostLogField;
 import cn.pku.ueba.util.GrayLogUtil;
 
+/**
+ * HostDAO的实现
+ */
 public class HostDAOImpl implements HostDAO {
+	/**
+	 * Host存储的index
+	 */
 	static String index = "graylog_0";
+	/**
+	 * Host存储的type
+	 */
 	static String type = "host";
 
 	private static HostDAOImpl instance;
 
+	/**
+	 * 获取该对象
+	 * 
+	 * @return HostDAOImpl对象
+	 */
 	public static HostDAOImpl getInstance() {
 		if (instance == null)
 			instance = new HostDAOImpl();
 		return instance;
 	}
 
+	/**
+	 * @see cn.pku.ueba.dao.HostDAO#indexHost(cn.pku.ueba.model.Host)
+	 */
 	public void indexHost(Host host) {
 		// 插入到graylog中
 		Map<String, Object> json = new HashMap<String, Object>();
@@ -51,9 +68,7 @@ public class HostDAOImpl implements HostDAO {
 		}
 	}
 
-	/*
-	 * 从数据库中获取Host(non-Javadoc)
-	 * 
+	/**
 	 * @see cn.pku.ueba.dao.HostDAO#getHost(java.lang.String)
 	 */
 	public Host getHost(String ip) {
@@ -98,9 +113,8 @@ public class HostDAOImpl implements HostDAO {
 		return host;
 	}
 
-	/*
-	 * 从数据库中删除后身体(non-Javadoc)
-	 * 
+	/**
+
 	 * @see cn.pku.ueba.dao.HostDAO#deleteHost(java.lang.String)
 	 */
 	public void deleteHost(String ip) {

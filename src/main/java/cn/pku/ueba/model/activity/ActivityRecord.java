@@ -9,7 +9,7 @@ import java.util.Date;
 import cn.pku.ueba.model.Host;
 import cn.pku.ueba.model.User;
 
-/* 一条活动记录，主要是谁干了什么，类型由ActivityType指定
+/* 活动记录基类，主要是谁干了什么，类型由ActivityType指定
  * @author xixiangyu
  * @Version 0.1
  */

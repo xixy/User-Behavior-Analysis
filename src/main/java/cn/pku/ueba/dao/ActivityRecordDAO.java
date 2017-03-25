@@ -19,7 +19,7 @@ public interface ActivityRecordDAO {
 	 * 用来将活动记录对象持久化
 	 * 
 	 * @param activityrecord
-	 * @return void
+	 *            活动记录对象
 	 */
 	public void index(ActivityRecord activityrecord);
 
@@ -27,8 +27,10 @@ public interface ActivityRecordDAO {
 	 * 获取某个用户过去时间段的所有记录
 	 * 
 	 * @param user
+	 *            用户对象
 	 * @param interval
-	 * @return
+	 *            时间间隔，单位是天
+	 * @return 活动记录对象的列表
 	 */
 	public List<ActivityRecord> getActivityRecordByUser(User user, int interval);
 
@@ -36,7 +38,8 @@ public interface ActivityRecordDAO {
 	 * 获取过去时间段的所有日志并将其转化为活动记录对象
 	 * 
 	 * @param interval
-	 * @return
+	 *            时间间隔，单位是天
+	 * @return 活动记录对象的列表
 	 */
 	public List<ActivityRecord> getActivityRecord(int interval);
 

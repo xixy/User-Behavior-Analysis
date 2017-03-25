@@ -18,33 +18,40 @@ import cn.pku.ueba.model.activity.ActivityType;
 import cn.pku.ueba.resource.ADLogField;
 import cn.pku.ueba.resource.activitylogfield.ADActivityLogField;
 
+/**
+ * 用来处理ADActivityRecord对象的持久化
+ * 
+ * @author xixy10@foxmal.com
+ */
 public class ADActivityRecordFactory extends ActivityRecordFactory {
 
 	private static ADActivityRecordFactory adARF;
 
-	// 获取实例
+	/**
+	 * 单例模式用来获取一个ADARF对象
+	 * 
+	 * @return ADActivityRecordFactory对象
+	 */
 	public static ActivityRecordFactory getInstance() {
 		if (adARF == null)
 			adARF = new ADActivityRecordFactory();
 		return adARF;
 	}
 
-	/*
-	 * 创建一个用户活动(non-Javadoc)
+	/**
+	 * 返回一个ADActivityRecord对象
 	 * 
-	 * @see cn.pku.ueba.dao.factory.ActivityRecordFactory#getActivityRecord()
+	 * @return 返回一个ADActivityRecord对象
 	 */
 	public ActivityRecord getActivityRecord() {
 		ADActivityRecord ar = new ADActivityRecord();
 		return ar;
 	}
 
-	/*
-	 * 将用户活动转换为JSON(non-Javadoc)
+	/**
+	 * 将AD用户活动转换为JSON
 	 * 
-	 * @see
-	 * cn.pku.ueba.dao.factory.ActivityRecordFactory#getJSONFromActivityRecord(
-	 * cn.pku.ueba.model.activity.ActivityRecord)
+	 * @return json对象
 	 */
 	public Map<String, Object> getJsonFromActivityRecord(ActivityRecord activityrecord) {
 		ADActivityRecord adAR = (ADActivityRecord) activityrecord;
@@ -68,12 +75,10 @@ public class ADActivityRecordFactory extends ActivityRecordFactory {
 		return json;
 	}
 
-	/*
-	 * 从数据库中提取的JSON格式的元日志中提取用户活动(non-Javadoc)
+	/**
+	 * 从ES中的JSON转化为活动记录对象
 	 * 
-	 * @see
-	 * cn.pku.ueba.dao.factory.ActivityRecordFactory#getActivityRecordFromJSON(
-	 * java.util.Map)
+	 * @return 活动记录对象
 	 */
 	public ActivityRecord getActivityRecordFromJson(Map<String, Object> json) {
 		ADActivityRecord ar = new ADActivityRecord();

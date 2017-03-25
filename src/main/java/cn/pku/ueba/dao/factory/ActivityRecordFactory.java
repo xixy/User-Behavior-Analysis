@@ -8,15 +8,36 @@ import java.util.Map;
 
 import cn.pku.ueba.model.activity.ActivityRecord;
 
+/**
+ * 用来处理ActivityRecord对象
+ * 
+ * @author xixy10@foxmal.com
+ */
 public abstract class ActivityRecordFactory {
 
-	// 创建一个活动记录
+	/**
+	 * 获取到一个活动记录对象，各个ARF的派生类自行实现
+	 * 
+	 * @return 活动记录对象
+	 */
 	public abstract ActivityRecord getActivityRecord();
 
-	// 将ActivityRecord转换为JSON
+	/**
+	 * 将ActivityRecord转换为JSON
+	 * 
+	 * @param activityrecord
+	 *            活动记录对象
+	 * @return json对象可以直接用于存储到ES中
+	 */
 	public abstract Map<String, Object> getJsonFromActivityRecord(ActivityRecord activityrecord);
 
-	// 将ActivityRecord转换为JSON
+	/**
+	 * 将JSON对象转化为ActivityRecord对象
+	 * 
+	 * @param json
+	 *            ES中存储的活动对象
+	 * @return 活动记录对象
+	 */
 	public abstract ActivityRecord getActivityRecordFromJson(Map<String, Object> json);
 
 }

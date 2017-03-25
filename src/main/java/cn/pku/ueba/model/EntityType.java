@@ -4,7 +4,12 @@
  */
 package cn.pku.ueba.model;
 
+/**
+ * 实体类型，暂时有两种类型
+ * 
+ * @author xixy10@foxmail.com
+ * @version v1.0
+ */
 public enum EntityType {
-	user,
-	host
+	user, host
 }

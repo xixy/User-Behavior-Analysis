@@ -4,6 +4,9 @@
  */
 package cn.pku.ueba.model;
 
+/**
+ * 主机类型
+ */
 public enum HostType {
 	application_server, database_server, pc, firewall, webgate
 

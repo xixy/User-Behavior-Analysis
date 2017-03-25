@@ -9,34 +9,62 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * 处理ES和标准date的类
+ * 
+ * @author xixy10@foxmail.com
+ */
 public class DateUtil {
 
+	/**
+	 * iso8601 时间格式
+	 */
 	static SimpleDateFormat dateiso8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	/**
+	 * 标准date格式
+	 */
 	static SimpleDateFormat standarddate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-	/*
+	/**
 	 * 得到现在的时刻点，转换为ES时间格式的输出
+	 * 
+	 * @return iso8601时间格式
 	 */
 	public static String getESDate() {
 		return dateiso8601.format(new Date());
 	}
 
 	/*
+	 * 
+	 */
+	/**
 	 * 将标准时间格式转化为ES时间格式的输出
+	 * 
+	 * @param date
+	 *            标准时间对象
+	 * @return ES时间对象
 	 */
 	public static String toESDate(Date date) {
 		return dateiso8601.format(date);
 	}
 
-	/*
-	 * 得到过去24小时的时刻点，并转换为ES时间格式的输出
+	/**
+	 * 得到过去若干天的时刻点，并以iso格式返回
+	 * 
+	 * @param interval
+	 *            天数
+	 * @return isodate格式对象
 	 */
 	public static String getLastDayESDate(int interval) {
 		return toESDate(getYesterdayDate(interval));
 	}
 
-	/*
-	 * 得到过去24小时的时刻点
+	/**
+	 * 得到过去若干天的时刻点
+	 * 
+	 * @param interval
+	 *            天数
+	 * @return 标准date对象
 	 */
 	public static Date getYesterdayDate(int interval) {
 		String now = standarddate.format(new Date());

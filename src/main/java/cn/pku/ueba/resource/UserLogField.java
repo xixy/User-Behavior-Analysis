@@ -4,6 +4,9 @@
  */
 package cn.pku.ueba.resource;
 
+/**
+ * User数据库中的key
+ */
 public class UserLogField {
 	public static String name = "name";
 	public static String id = "id";

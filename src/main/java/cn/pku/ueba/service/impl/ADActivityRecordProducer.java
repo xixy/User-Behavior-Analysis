@@ -29,7 +29,12 @@ import cn.pku.ueba.service.ActivityRecordProducer;
 import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 
-@Deprecated
+/**
+ * AD用户活动的产生类
+ * 
+ * @author xixy10@foxmail.com
+ * @deprecated
+ */
 public class ADActivityRecordProducer extends ActivityRecordProducer {
 	public String index = "graylog_0";
 	public String type = "message";
@@ -39,12 +44,6 @@ public class ADActivityRecordProducer extends ActivityRecordProducer {
 		System.out.println(arp.index);
 	}
 
-	/*
-	 * 从原生日志中提取用户活动记录 (non-Javadoc)
-	 * 
-	 * @see
-	 * cn.pku.ueba.service.ActivityRecordProducer#getActivityRecordFromRawLog()
-	 */
 	public List<ActivityRecord> getActivityRecordFromRawLog() {
 		List<ActivityRecord> records = new ArrayList<ActivityRecord>();
 

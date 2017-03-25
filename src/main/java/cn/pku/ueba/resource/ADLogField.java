@@ -4,6 +4,9 @@
  */
 package cn.pku.ueba.resource;
 
+/**
+ * AD日志的key
+ */
 public class ADLogField {
 	public static String ipaddress = "winlogbeat_event_data_IpAddress";
 	public static String port = "winlogbeat_event_data_IpPort";

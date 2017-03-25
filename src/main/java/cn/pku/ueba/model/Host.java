@@ -4,6 +4,9 @@
  */
 package cn.pku.ueba.model;
 
+/**
+ * 主机模型
+ */
 public class Host extends Entity {
 	public static Integer hostId = 0;
 	private String macaddress;

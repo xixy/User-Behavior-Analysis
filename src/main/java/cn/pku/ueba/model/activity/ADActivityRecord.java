@@ -4,6 +4,11 @@
  */
 package cn.pku.ueba.model.activity;
 
+/**
+ * AD日志相关的用户活动记录
+ * 
+ * @author xixy10@foxmail.com
+ */
 public class ADActivityRecord extends ActivityRecord {
 
 }

@@ -25,16 +25,25 @@ import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 import cn.pku.ueba.util.RawLogUtil;
 
+/**
+ * 用户活动DAO的实现
+ */
 public class ActivityRecordDAOImpl implements ActivityRecordDAO {
-
+	/**
+	 * 用户活动记录存储的index
+	 */
 	static String index = "graylog_0";
+	/**
+	 * 用户活动记录存储的type
+	 */
 	static String type = "message";
 
-	/*
-	 * 将活动存储到GrayLog中，这个方法基本上不需要修改(non-Javadoc)
+	/**
+	 * 将活动存储到GrayLog中，这个方法基本上不需要修改
 	 * 
-	 * @see cn.pku.ueba.dao.ActivityRecordDAO#index(cn.pku.ueba.model.activity.
-	 * ActivityRecord)
+	 * @param activityRecord
+	 *            用户活动记录对象
+	 * @see cn.pku.ueba.dao.ActivityRecordDAO#index(cn.pku.ueba.model.activity.ActivityRecord)
 	 */
 	public void index(ActivityRecord activityRecord) {
 		Map<String, Object> json = ARFFactory.getActivityRecordFactoryInstance(activityRecord.getType())
@@ -47,13 +56,6 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 
 	}
 
-	/*
-	 * 获取用户过去几天的活动 interval = -1表示所有活动；否则就是过去inteval天的活动 用户可能有多种活动 (non-Javadoc)
-	 * 
-	 * @see
-	 * cn.pku.ueba.dao.ActivityRecordDAO#getActivityRecordByUser(cn.pku.ueba.
-	 * model.User, int)
-	 */
 	public List<ActivityRecord> getActivityRecordByUser(User user, int interval) {
 		List<ActivityRecord> ars = new ArrayList<ActivityRecord>();
 		QueryBuilder queryterm = QueryBuilders.termQuery("user", user.getName());

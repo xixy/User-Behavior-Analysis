@@ -3,7 +3,9 @@
  * @version V0.1 2017年3月23日 下午7:10:24
  */
 package cn.pku.ueba.resource;
-
+/**
+ * HostLog的key
+ */
 public class HostLogField {
 	public static String ip = "ip";// ip地址还是mac地址？
 	public static String macaddress = "macaddress";

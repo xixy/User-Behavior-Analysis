@@ -4,6 +4,10 @@
  */
 package cn.pku.ueba.resource.activitylogfield;
 
+/**
+ * AD用户活动存储的字段
+ * @author xixy10@foxmail.com
+ */
 public class ADActivityLogField {
 	public static String user = "user";
 	public static String host = "host";

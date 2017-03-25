@@ -1,14 +1,28 @@
 /**
- * 实体的抽象类，继承的类包括 User Host 以后慢慢加 
  * @author xixy10@foxmail.com
  * @version V0.1 2017年3月23日 下午7:10:24
  */
 package cn.pku.ueba.model;
 
+/**
+ * 实体的抽象类
+ */
 public abstract class Entity {
-	private Integer id;// 实体id
-	private Double riskscore;// risk score
-	private String name;// 名称，例如张三或计算机1
+	/**
+	 * 实体id
+	 */
+	private Integer id;
+	/**
+	 * 实体风险得分
+	 */
+	private Double riskscore;
+	/**
+	 * 实体名称，例如张三、server1024
+	 */
+	private String name;
+	/**
+	 * 所属部门
+	 */
 	private String department;
 
 	public Integer getId() {

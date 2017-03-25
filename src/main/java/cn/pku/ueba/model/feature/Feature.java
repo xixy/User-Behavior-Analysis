@@ -4,6 +4,9 @@
  */
 package cn.pku.ueba.model.feature;
 
+/**
+ * 特征模型
+ */
 public abstract class Feature {
 	private String key;
 	private Object value;

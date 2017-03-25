@@ -33,11 +33,6 @@ public class UserDAOImpl implements UserDAO {
 
 	}
 
-	/*
-	 * 创建用户并且存入到graylog中(non-Javadoc)
-	 * 
-	 * @see cn.pku.ueba.dao.UserDAO#createUser(java.lang.String)
-	 */
 	public void indexUser(User user) {
 		// 插入到graylog中
 		Map<String, Object> json = new HashMap<String, Object>();
@@ -98,11 +93,6 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
-	/*
-	 * 删除用户(non-Javadoc)
-	 * 
-	 * @see cn.pku.ueba.dao.UserDAO#deleteUser(java.lang.String)
-	 */
 	public void deleteUser(String name) {
 		QueryBuilder queryterm = QueryBuilders.termQuery("name", name);
 		SearchResponse response = null;

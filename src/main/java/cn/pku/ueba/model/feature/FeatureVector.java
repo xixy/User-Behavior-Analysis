@@ -11,6 +11,9 @@ import java.util.TreeSet;
 
 import cn.pku.ueba.model.Entity;
 
+/**
+ * 特征向量对象
+ */
 public class FeatureVector {
 	public TreeSet<Feature> features;
 	public Entity entity;
@@ -25,5 +28,21 @@ public class FeatureVector {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public TreeSet<Feature> getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(TreeSet<Feature> features) {
+		this.features = features;
+	}
+
+	public Entity getEntity() {
+		return entity;
+	}
+
+	public void setEntity(Entity entity) {
+		this.entity = entity;
 	}
 }
