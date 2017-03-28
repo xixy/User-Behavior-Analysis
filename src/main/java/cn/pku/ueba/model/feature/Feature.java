@@ -4,27 +4,28 @@
  */
 package cn.pku.ueba.model.feature;
 
+import cn.pku.ueba.resource.featurefield.FeatureField;
+
 /**
  * 特征模型
  */
-public abstract class Feature {
-	private String key;
-	private Object value;
+public class Feature {
+	private FeatureField key;
+	private float value;
 
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public Object getValue() {
+	public float getValue() {
 		return value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(float value) {
 		this.value = value;
 	}
 
+	public FeatureField getKey() {
+		return key;
+	}
+
+	public void setKey(FeatureField key) {
+		this.key = key;
+	}
 }
