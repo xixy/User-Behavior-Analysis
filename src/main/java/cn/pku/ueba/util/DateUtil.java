@@ -78,7 +78,6 @@ public class DateUtil {
 		c.setTime(date);
 		int day = c.get(Calendar.DATE);
 		c.set(Calendar.DATE, day - interval);
-		System.out.println(c.getTime());
 		return c.getTime();
 	}
 }

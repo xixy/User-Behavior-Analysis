@@ -29,6 +29,12 @@ public class ARFFactory {
 		case ad:
 			arf = new ADActivityRecordFactory();
 			break;
+		case hostlogout:
+			break;
+		case ssh_access:
+			break;
+		default:
+			break;
 		}
 
 		return arf;
