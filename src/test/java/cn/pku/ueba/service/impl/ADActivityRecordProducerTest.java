@@ -1,8 +1,10 @@
 /**
  * @author xixy10@foxmail.com
- * @version V0.1 2017年3月29日 下午3:51:16
+ * @version V0.1 2017年3月29日 下午6:11:36
  */
 package cn.pku.ueba.service.impl;
+
+import static org.junit.Assert.fail;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import cn.pku.ueba.dao.factory.ARFFactory;
@@ -41,7 +44,8 @@ public class ADActivityRecordProducerTest {
 	 * .
 	 */
 	@Test
-	public void testGetActivityRecordFromRawLogMapOfStringObject() {
+	@Ignore
+	public void testGetActivityRecordFromRawLog() {
 		List<ActivityRecord> records = new ArrayList<ActivityRecord>();
 
 		QueryBuilder queryterm = QueryBuilders.termQuery("winlogbeat_task", "Kerberos 身份验证服务");
@@ -90,6 +94,23 @@ public class ADActivityRecordProducerTest {
 				records.add(ar);
 			}
 		}
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link cn.pku.ueba.service.impl.ADActivityRecordProducer#getInstance()}.
+	 */
+	@Test
+	public void testGetInstance() {
+		ADActivityRecordProducer ad = ADActivityRecordProducer.getInstance();
+		if (ad != null) {
+			if (ad.getaType().equals(ActivityType.ad))
+				if (ad.getIndex().equals("graylog_0"))
+					if (ad.getType().equals("message"))
+						return;
+		}
+		fail("GetInstance failed");
 
 	}
 

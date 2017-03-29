@@ -23,6 +23,13 @@ import cn.pku.ueba.service.ActivityRecordProducer;
  * @author xixy10@foxmail.com
  */
 public class ADActivityRecordProducer extends ActivityRecordProducer {
+	/**
+	 * 构造函数
+	 */
+	public ADActivityRecordProducer() {
+		this.setaType(ActivityType.ad);
+	}
+
 	private static ADActivityRecordProducer instance = new ADActivityRecordProducer();
 
 	/**
@@ -36,11 +43,11 @@ public class ADActivityRecordProducer extends ActivityRecordProducer {
 		return instance;
 	}
 
-	public ActivityType aType = ActivityType.ad;
+	// public ActivityType aType = ActivityType.ad;
 
 	public ActivityRecord getActivityRecordFromRawLog(Map<String, Object> source) {
 		// 获取相应的活动记录对象
-		ActivityRecord ar = ARFFactory.getActivityRecordFactoryInstance(aType).getActivityRecord();
+		ActivityRecord ar = ARFFactory.getActivityRecordFactoryInstance(this.getaType()).getActivityRecord();
 
 		// 填充字段
 		// 提取出ip地址
