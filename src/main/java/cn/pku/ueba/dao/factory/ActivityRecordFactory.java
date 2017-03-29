@@ -32,7 +32,7 @@ public abstract class ActivityRecordFactory {
 	public abstract Map<String, Object> getJsonFromActivityRecord(ActivityRecord activityrecord);
 
 	/**
-	 * 将JSON对象转化为ActivityRecord对象
+	 * 将数据库中JSON对象转化为ActivityRecord对象
 	 * 
 	 * @param json
 	 *            ES中存储的活动对象

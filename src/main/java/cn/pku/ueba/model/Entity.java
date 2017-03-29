@@ -7,7 +7,7 @@ package cn.pku.ueba.model;
 /**
  * 实体的抽象类
  */
-public abstract class Entity {
+public abstract class Entity{
 	/**
 	 * 实体id
 	 */

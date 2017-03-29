@@ -14,7 +14,9 @@ import org.junit.Test;
 public class ActivityRecordDAOImplTest {
 
 	/**
-	 * Test method for {@link cn.pku.ueba.dao.impl.ActivityRecordDAOImpl#index(cn.pku.ueba.model.activity.ActivityRecord)}.
+	 * Test method for
+	 * {@link cn.pku.ueba.dao.impl.ActivityRecordDAOImpl#index(cn.pku.ueba.model.activity.ActivityRecord)}
+	 * .
 	 */
 	@Test
 	public void testIndex() {
@@ -22,20 +24,14 @@ public class ActivityRecordDAOImplTest {
 	}
 
 	/**
-	 * Test method for {@link cn.pku.ueba.dao.impl.ActivityRecordDAOImpl#getActivityRecordByUser(cn.pku.ueba.model.User, int)}.
+	 * Test method for
+	 * {@link cn.pku.ueba.dao.impl.ActivityRecordDAOImpl#getActivityRecordByUser(cn.pku.ueba.model.User, int)}
+	 * .
 	 */
 	@Test
 	public void testGetActivityRecordByUser() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link cn.pku.ueba.dao.impl.ActivityRecordDAOImpl#getActivityRecord(int)}.
-	 */
-	@Test
-	public void testGetActivityRecord() {
 		ActivityRecordDAOImpl ardi = new ActivityRecordDAOImpl();
-		ardi.getActivityRecord(30);
+		ardi.getActivityRecordByUser(null, 30);
 	}
 
 }

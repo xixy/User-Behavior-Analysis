@@ -24,23 +24,14 @@ public interface ActivityRecordDAO {
 	public void index(ActivityRecord activityrecord);
 
 	/**
-	 * 获取某个用户过去时间段的所有记录
+	 * 获取某个用户或者所有用户过去时间段的所有记录
 	 * 
 	 * @param user
-	 *            用户对象
+	 *            用户对象 如果是null，则表示所有用户；如果非null，则表示该用户
 	 * @param interval
 	 *            时间间隔，单位是天
 	 * @return 活动记录对象的列表
 	 */
 	public List<ActivityRecord> getActivityRecordByUser(User user, int interval);
-
-	/**
-	 * 获取过去时间段的所有日志并将其转化为活动记录对象
-	 * 
-	 * @param interval
-	 *            时间间隔，单位是天
-	 * @return 活动记录对象的列表
-	 */
-	public List<ActivityRecord> getActivityRecord(int interval);
 
 }
