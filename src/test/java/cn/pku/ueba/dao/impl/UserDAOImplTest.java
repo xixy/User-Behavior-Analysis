@@ -6,6 +6,8 @@ package cn.pku.ueba.dao.impl;
 
 import static org.junit.Assert.fail;
 
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -19,6 +21,12 @@ import cn.pku.ueba.model.User;
 @FixMethodOrder(MethodSorters.JVM)
 public class UserDAOImplTest {
 	UserDAOImpl ud = new UserDAOImpl();
+
+//	@Test
+//	public void test() {
+//		QueryBuilder queryterm = QueryBuilders.termQuery("name", "xixy");
+//		System.out.println(queryterm.toString());
+//	}
 
 	/**
 	 * Test method for {@link cn.pku.ueba.dao.impl.UserDAOImpl#getInstance()}.

@@ -1,0 +1,4 @@
+ip=192.168.200.160
+port=9300
+index=graylog_0
+type=message

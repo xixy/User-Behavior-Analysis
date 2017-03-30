@@ -6,6 +6,8 @@ package cn.pku.ueba.util;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -86,12 +88,15 @@ public class GrayLogUtil {
 	 *            过滤器
 	 * @param size
 	 *            一次返回的数目，最多10000
-	 * @return 返回搜索结果
+	 * @return 返回搜索结果，作为一个SearchResponse的List，因为可能结果超过10000，这时候就要搜索多次
 	 * @throws UnknownHostException
 	 *             主机查找失败
 	 */
 	public static SearchResponse search(String index, String type, SearchType searchtype, QueryBuilder queryterm,
 			QueryBuilder filter, int size) throws UnknownHostException {
+		List<SearchResponse> result = new ArrayList<SearchResponse>();
+		// 首先查询这次检索得到的count
+
 		SearchResponse response = null;
 		if (filter != null)
 			response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
@@ -99,6 +104,7 @@ public class GrayLogUtil {
 		else
 			response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
 					.setFrom(0).setSize(size).setExplain(true).execute().actionGet();
+		result.add(response);
 		return response;
 	}
 
