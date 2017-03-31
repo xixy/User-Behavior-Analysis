@@ -7,11 +7,14 @@ package cn.pku.ueba.util;
 import java.util.Map;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  *
  */
+@FixMethodOrder(MethodSorters.JVM) // 指定测试方法按定义的顺序执行
 public class HttpClientUtilTest {
 	String URLGet = "http://192.168.200.160:9200/graylog_0/message/_count";
 

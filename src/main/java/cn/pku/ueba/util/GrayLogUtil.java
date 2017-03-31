@@ -108,10 +108,6 @@ public class GrayLogUtil {
 		return response;
 	}
 
-	/*
-	 * 存储语句
-	 */
-
 	/**
 	 * 索引语句
 	 * 

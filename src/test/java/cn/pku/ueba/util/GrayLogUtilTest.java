@@ -15,11 +15,14 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  *
  */
+@FixMethodOrder(MethodSorters.JVM) // 指定测试方法按定义的顺序执行
 public class GrayLogUtilTest {
 	public static String index = "graylog_0";
 	public static String type = "test";
@@ -37,6 +40,20 @@ public class GrayLogUtilTest {
 
 	/**
 	 * Test method for
+	 * {@link cn.pku.ueba.util.GrayLogUtil#index(java.lang.String, java.lang.String, java.util.Map)}
+	 * .
+	 * 
+	 * @throws UnknownHostException
+	 */
+	@Test
+	public void testIndex() throws UnknownHostException {
+		Map<String, Object> json = new HashMap<String, Object>();
+		json.put("test", "test");
+		GrayLogUtil.index(index, type, json);
+	}
+
+	/**
+	 * Test method for
 	 * {@link cn.pku.ueba.util.GrayLogUtil#search(java.lang.String, java.lang.String, org.elasticsearch.action.search.SearchType, org.elasticsearch.index.query.QueryBuilder, org.elasticsearch.index.query.QueryBuilder, int)}
 	 * .
 	 * 
@@ -50,21 +67,6 @@ public class GrayLogUtilTest {
 				.setExplain(true).execute().actionGet();
 		if (response.getHits().getHits().length != 1)
 			fail("GrayLogUtil cannont search");
-
-	}
-
-	/**
-	 * Test method for
-	 * {@link cn.pku.ueba.util.GrayLogUtil#index(java.lang.String, java.lang.String, java.util.Map)}
-	 * .
-	 * 
-	 * @throws UnknownHostException
-	 */
-	@Test
-	public void testIndex() throws UnknownHostException {
-		Map<String, Object> json = new HashMap<String, Object>();
-		json.put("test", "test");
-		GrayLogUtil.index(index, type, json);
 	}
 
 	/**
