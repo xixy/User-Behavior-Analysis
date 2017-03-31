@@ -87,5 +87,4 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 		return ars;
 	}
 
-
 }
