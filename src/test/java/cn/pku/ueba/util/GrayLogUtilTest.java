@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
@@ -60,13 +61,38 @@ public class GrayLogUtilTest {
 	 * @throws UnknownHostException
 	 */
 	@Test
-	public void testSearch() throws UnknownHostException {
-		QueryBuilder queryterm = QueryBuilders.termQuery("test", "test");
-		SearchResponse response = GrayLogUtil.getClient().prepareSearch(index).setTypes(type)
-				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH).setQuery(queryterm).setFrom(0).setSize(1)
-				.setExplain(true).execute().actionGet();
-		if (response.getHits().getHits().length != 1)
-			fail("GrayLogUtil cannont search");
+	public void testSearch1() throws UnknownHostException {
+		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
+		QueryBuilder filter = null;
+		List<SearchResponse> responseList = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm,
+				filter, 10000);
+		for (SearchResponse response : responseList) {
+			System.out.println(response.getHits().getHits().length);
+			if (response.getHits().getHits().length == 0)
+				fail("GrayLogUtil cannont search");
+
+		}
+	}
+
+	/**
+	 * Test method for
+	 * {@link cn.pku.ueba.util.GrayLogUtil#search(java.lang.String, java.lang.String, org.elasticsearch.action.search.SearchType, org.elasticsearch.index.query.QueryBuilder, org.elasticsearch.index.query.QueryBuilder, int)}
+	 * .
+	 * 
+	 * @throws UnknownHostException
+	 */
+	@Test
+	public void testSearch2() throws UnknownHostException {
+		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
+		QueryBuilder filter = null;
+		List<SearchResponse> responseList = GrayLogUtil.search(index, "message", SearchType.DFS_QUERY_THEN_FETCH,
+				queryterm, filter, 10000);
+		for (SearchResponse response : responseList) {
+			System.out.println(response.getHits().getHits().length);
+			if (response.getHits().getHits().length == 0)
+				fail("GrayLogUtil cannont search");
+
+		}
 	}
 
 	/**
@@ -77,19 +103,21 @@ public class GrayLogUtilTest {
 	@Test
 	public void testDelete() {
 		QueryBuilder queryterm = QueryBuilders.termQuery("test", "test");
-		SearchResponse response = null;
+		List<SearchResponse> responseList = null;
 		try {
-			response = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
+			responseList = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		if (response.getHits().getHits().length > 0)
-			for (SearchHit hit : response.getHits().getHits()) {
-				String id = hit.getId();
-				GrayLogUtil.delete(index, type, id);
-			}
-		else
-			fail("GrayLogUtil cannot delete");
+		for (SearchResponse response : responseList) {
+			if (response.getHits().getHits().length > 0)
+				for (SearchHit hit : response.getHits().getHits()) {
+					String id = hit.getId();
+					GrayLogUtil.delete(index, type, id);
+				}
+			else
+				fail("GrayLogUtil cannot delete");
+		}
 	}
 
 }

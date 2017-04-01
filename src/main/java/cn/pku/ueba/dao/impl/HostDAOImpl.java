@@ -5,6 +5,7 @@ package cn.pku.ueba.dao.impl;
  * @version V0.1 2017年3月23日 下午7:10:24
  */
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
@@ -58,20 +59,21 @@ public class HostDAOImpl implements HostDAO {
 
 		Host host = null;
 		QueryBuilder queryterm = QueryBuilders.termQuery("ip", ip);
-		SearchResponse response = null;
+		List<SearchResponse> responseList = null;
 		try {
-			response = GrayLogUtil.search(Configure.getIndex(), Configure.getHosttype(),
+			responseList = GrayLogUtil.search(Configure.getIndex(), Configure.getHosttype(),
 					SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 		// 然后生成Host对象
-		if (response.getHits().getHits().length > 0)
-			for (SearchHit hit : response.getHits().getHits()) {
-				Map<String, Object> fields = hit.getSource();
-				host = HostFactory.getHostFromJson(fields);
-				break;
-			}
+		for (SearchResponse response : responseList)
+			if (response.getHits().getHits().length > 0)
+				for (SearchHit hit : response.getHits().getHits()) {
+					Map<String, Object> fields = hit.getSource();
+					host = HostFactory.getHostFromJson(fields);
+					break;
+				}
 
 		return host;
 	}
@@ -82,18 +84,19 @@ public class HostDAOImpl implements HostDAO {
 	 */
 	public void deleteHost(String ip) {
 		QueryBuilder queryterm = QueryBuilders.termQuery("ip", ip);
-		SearchResponse response = null;
+		List<SearchResponse> responseList = null;
 		try {
-			response = GrayLogUtil.search(Configure.getIndex(), Configure.getHosttype(),
+			responseList = GrayLogUtil.search(Configure.getIndex(), Configure.getHosttype(),
 					SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		if (response.getHits().getHits().length > 0)
-			for (SearchHit hit : response.getHits().getHits()) {
-				String id = hit.getId();
-				GrayLogUtil.delete(Configure.getIndex(), Configure.getHosttype(), id);
-			}
+		for (SearchResponse response : responseList)
+			if (response.getHits().getHits().length > 0)
+				for (SearchHit hit : response.getHits().getHits()) {
+					String id = hit.getId();
+					GrayLogUtil.delete(Configure.getIndex(), Configure.getHosttype(), id);
+				}
 
 	}
 

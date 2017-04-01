@@ -19,7 +19,10 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+
+import cn.pku.ueba.configure.Configure;
 
 /**
  * 封装的用于进行ES检索、索引、删除、修改等操作的类 <br>
@@ -28,23 +31,6 @@ import org.elasticsearch.search.SearchHit;
  * @author xixy10@foxmail.com
  */
 public class GrayLogUtil {
-	/**
-	 * 默认的操作index
-	 */
-	static String es_index = "graylog_0";
-	/**
-	 * 默认的操作type
-	 */
-	static String es_type = "message";
-	/**
-	 * 默认的地址
-	 */
-	static String ip_address = "192.168.200.160";
-
-	/**
-	 * 默认的操作port
-	 */
-	static int port = 9300;
 	/**
 	 * 最基础的setting对象
 	 */
@@ -63,8 +49,8 @@ public class GrayLogUtil {
 	 */
 	public static Client getClient() throws UnknownHostException {
 		if (client == null) {
-			client = TransportClient.builder().settings(settings).build()
-					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(ip_address), port));
+			client = TransportClient.builder().settings(settings).build().addTransportAddress(
+					new InetSocketTransportAddress(InetAddress.getByName(Configure.getIp()), Configure.getPort()));
 		}
 		return client;
 
@@ -92,20 +78,44 @@ public class GrayLogUtil {
 	 * @throws UnknownHostException
 	 *             主机查找失败
 	 */
-	public static SearchResponse search(String index, String type, SearchType searchtype, QueryBuilder queryterm,
+	public static List<SearchResponse> search(String index, String type, SearchType searchtype, QueryBuilder queryterm,
 			QueryBuilder filter, int size) throws UnknownHostException {
 		List<SearchResponse> result = new ArrayList<SearchResponse>();
-		// 首先查询这次检索得到的count
 
-		SearchResponse response = null;
-		if (filter != null)
-			response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
-					.setPostFilter(filter).setFrom(0).setSize(size).setExplain(true).execute().actionGet();
-		else
-			response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
-					.setFrom(0).setSize(size).setExplain(true).execute().actionGet();
-		result.add(response);
-		return response;
+		// QueryBuilder filter1 =
+		// QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+		// .gt(DateUtil.getLastDayESDate(1));
+		QueryBuilder filter1 = filter;
+
+		Boolean searchagain = true;
+		while (searchagain) {
+			searchagain = false;
+
+			SearchResponse response = null;
+			if (filter != null)
+				response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
+						.setPostFilter(filter1).setPostFilter(filter).setFrom(0).setSize(size).setExplain(true)
+						.execute().actionGet();
+			else if (filter1 != null)
+				response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
+						.setPostFilter(filter1).setFrom(0).setSize(size).setExplain(true).execute().actionGet();
+			else
+				response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
+						.setFrom(0).setSize(size).setExplain(true).execute().actionGet();
+
+			if (response.getHits().getHits().length == 10000) {
+				// 如果需要继续fetch，那么就设置新的filter，然后构建新的search
+				SearchHit hit = response.getHits().getHits()[9999];
+				String timestamp = (String) hit.getSource().get("timestamp");
+				// 设置新的时间filter
+				filter1 = QueryBuilders.rangeQuery("timestamp").from(timestamp);
+				searchagain = true;
+			}
+
+			System.out.println(response.getHits().getHits()[0].getSource().get("timestamp"));
+			result.add(response);
+		}
+		return result;
 	}
 
 	/**
@@ -159,38 +169,6 @@ public class GrayLogUtil {
 			}
 		}
 
-	}
-
-	public static String getEs_index() {
-		return es_index;
-	}
-
-	public static void setEs_index(String es_index) {
-		GrayLogUtil.es_index = es_index;
-	}
-
-	public static String getEs_type() {
-		return es_type;
-	}
-
-	public static void setEs_type(String es_type) {
-		GrayLogUtil.es_type = es_type;
-	}
-
-	public static String getIp_address() {
-		return ip_address;
-	}
-
-	public static void setIp_address(String ip_address) {
-		GrayLogUtil.ip_address = ip_address;
-	}
-
-	public static int getPort() {
-		return port;
-	}
-
-	public static void setPort(int port) {
-		GrayLogUtil.port = port;
 	}
 
 	public static Settings getSettings() {

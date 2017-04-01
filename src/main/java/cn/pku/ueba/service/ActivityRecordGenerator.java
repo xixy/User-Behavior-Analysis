@@ -6,6 +6,7 @@ package cn.pku.ueba.service;
 
 import java.io.FileInputStream;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Properties;
 
 import org.elasticsearch.action.search.SearchResponse;
@@ -51,19 +52,19 @@ public class ActivityRecordGenerator {
 		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
 		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 				.gt(DateUtil.getLastDayESDate(3));// 过去一小时吧还是todo
-		SearchResponse response = null;
+		List<SearchResponse> responseList = null;
 		try {
-			response = GrayLogUtil.search(getIndex(), getType(), SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter,
+			responseList = GrayLogUtil.search(getIndex(), getType(), SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter,
 					10000);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 
 		// 将response转换为ActivityRecord
-		for (SearchHit hit : response.getHits().hits()) {
-			
+		for (SearchResponse response : responseList)
+			for (SearchHit hit : response.getHits().hits()) {
 
-		}
+			}
 
 	}
 

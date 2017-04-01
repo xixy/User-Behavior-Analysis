@@ -20,7 +20,8 @@ public class Configure {
 	private static String hosttype;
 	private static String activitytype;
 	private static String ip;
-	private static String port;
+	private static int port;
+	private static String clustername;
 
 	static {
 		try {
@@ -33,7 +34,8 @@ public class Configure {
 			hosttype = pro.getProperty("hosttype");
 			activitytype = pro.getProperty("activitytype");
 			ip = pro.getProperty("ip");
-			port = pro.getProperty("port");
+			port = Integer.parseInt(pro.getProperty("port"));
+			clustername = pro.getProperty("clustername");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,12 +98,20 @@ public class Configure {
 		Configure.ip = ip;
 	}
 
-	public static String getPort() {
+	public static int getPort() {
 		return port;
 	}
 
-	public static void setPort(String port) {
+	public static void setPort(int port) {
 		Configure.port = port;
+	}
+
+	public static String getClustername() {
+		return clustername;
+	}
+
+	public static void setClustername(String clustername) {
+		Configure.clustername = clustername;
 	}
 
 }

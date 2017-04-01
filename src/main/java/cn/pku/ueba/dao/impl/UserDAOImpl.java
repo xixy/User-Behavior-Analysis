@@ -5,6 +5,7 @@
 package cn.pku.ueba.dao.impl;
 
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
@@ -44,39 +45,41 @@ public class UserDAOImpl implements UserDAO {
 	public User getUser(String name) {
 		User user = null;
 		QueryBuilder queryterm = QueryBuilders.termQuery("name", name);
-		SearchResponse response = null;
+		List<SearchResponse> responseList = null;
 		try {
-			response = GrayLogUtil.search(Configure.getIndex(), Configure.getUsertype(),
+			responseList = GrayLogUtil.search(Configure.getIndex(), Configure.getUsertype(),
 					SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 		// 然后生成User对象
-		if (response.getHits().getHits().length > 0)
-			for (SearchHit hit : response.getHits().getHits()) {
-				Map<String, Object> fields = hit.getSource();
-				user = UserFactory.getUserFromJson(fields);
-				break;
-			}
+		for (SearchResponse response : responseList)
+			if (response.getHits().getHits().length > 0)
+				for (SearchHit hit : response.getHits().getHits()) {
+					Map<String, Object> fields = hit.getSource();
+					user = UserFactory.getUserFromJson(fields);
+					break;
+				}
 
 		return user;
 	}
 
 	public void deleteUser(String name) {
 		QueryBuilder queryterm = QueryBuilders.termQuery("name", name);
-		SearchResponse response = null;
+		List<SearchResponse> responseList = null;
 		try {
-			response = GrayLogUtil.search(Configure.getIndex(), Configure.getUsertype(),
+			responseList = GrayLogUtil.search(Configure.getIndex(), Configure.getUsertype(),
 					SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 		// 然后生成User对象
-		if (response.getHits().getHits().length > 0)
-			for (SearchHit hit : response.getHits().getHits()) {
-				String id = hit.getId();
-				GrayLogUtil.delete(Configure.getIndex(), Configure.getUsertype(), id);
-			}
+		for (SearchResponse response : responseList)
+			if (response.getHits().getHits().length > 0)
+				for (SearchHit hit : response.getHits().getHits()) {
+					String id = hit.getId();
+					GrayLogUtil.delete(Configure.getIndex(), Configure.getUsertype(), id);
+				}
 	}
 
 }
