@@ -65,6 +65,9 @@ public class HostFactoryTest {
 		Host host = HostFactory.getHostFromJson(json);
 		if (host == null)
 			fail("GetHostFromJson failed");
+		// 类型也正确
+		if (!host.getType().equals(HostType.application_server))
+			fail("GetHostFromJson failed");
 	}
 
 }

@@ -20,13 +20,13 @@ import cn.pku.ueba.model.User;
 @FixMethodOrder(MethodSorters.JVM)
 public class UserFactoryTest {
 
-	public static User user = UserFactory.getUser("张通");
+	public static User user = UserFactory.getUser("习翔宇");
 	public static Map<String, Object> json = null;
 
 	static {
 		user = UserFactory.getUser("张通");
 		user.setDepartment("北京大学软件工程中心");
-		user.setAge(22);
+		user.setAge(24);
 		user.setSex("男");
 		user.setJob("学生");
 		json = UserFactory.getJsonFromUser(user);

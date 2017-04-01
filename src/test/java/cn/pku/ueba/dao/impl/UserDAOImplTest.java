@@ -6,13 +6,11 @@ package cn.pku.ueba.dao.impl;
 
 import static org.junit.Assert.fail;
 
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import cn.pku.ueba.dao.factory.UserFactory;
+import cn.pku.ueba.dao.factory.UserFactoryTest;
 import cn.pku.ueba.model.User;
 
 /**
@@ -22,18 +20,13 @@ import cn.pku.ueba.model.User;
 public class UserDAOImplTest {
 	UserDAOImpl ud = new UserDAOImpl();
 
-//	@Test
-//	public void test() {
-//		QueryBuilder queryterm = QueryBuilders.termQuery("name", "xixy");
-//		System.out.println(queryterm.toString());
-//	}
-
 	/**
 	 * Test method for {@link cn.pku.ueba.dao.impl.UserDAOImpl#getInstance()}.
 	 */
 	@Test
 	public void testGetInstance() {
-		fail("Not yet implemented");
+		if (UserDAOImpl.getInstance() == null)
+			fail("GetInstance failed");
 	}
 
 	/**
@@ -43,35 +36,39 @@ public class UserDAOImplTest {
 	 */
 	@Test
 	public void testIndexUser() {
-		User user = UserFactory.getUser("习翔宇");
-		user.setAge(23);
-		user.setDepartment("研发中心");
-		user.setSex("男");
-		user.setJob("博士生");
-		ud.indexUser(user);
+		ud.indexUser(UserFactoryTest.user);
 	}
 
 	/**
 	 * Test method for
 	 * {@link cn.pku.ueba.dao.impl.UserDAOImpl#getUser(java.lang.String)}.
+	 * 
+	 * @throws InterruptedException
 	 */
 	@Test
-	public void testGetUser() {
-		User user = ud.getUser("习翔宇");
+	public void testGetUser() throws InterruptedException {
+		Thread.sleep(1000);
+		User user = ud.getUser(UserFactoryTest.user.getName());
 		if (user == null)
+			fail("UserDAO cannot getUser");
+
+		if (!user.getName().equals(UserFactoryTest.user.getName()))
 			fail("UserDAO cannot getUser");
 	}
 
 	/**
 	 * Test method for
 	 * {@link cn.pku.ueba.dao.impl.UserDAOImpl#deleteUser(java.lang.String)}.
+	 * 
+	 * @throws InterruptedException
 	 */
 	@Test
-	public void testDeleteUser() {
-		ud.deleteUser("习翔宇");
-		User user = ud.getUser("test");
+	public void testDeleteUser() throws InterruptedException {
+		ud.deleteUser(UserFactoryTest.user.getName());
+		Thread.sleep(1000);
+		User user = ud.getUser(UserFactoryTest.user.getName());
 		if (user != null)
-			fail("UserDAO cannot getUser");
+			fail("UserDAO cannot deleteuser");
 	}
 
 }

@@ -28,13 +28,19 @@ import cn.pku.ueba.util.GrayLogUtil;
  */
 public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 
+	private static ActivityRecordDAOImpl instance;
+
 	/**
-	 * 将活动存储到GrayLog中，这个方法基本上不需要修改
+	 * 获取该对象
 	 * 
-	 * @param activityRecord
-	 *            用户活动记录对象
-	 * @see cn.pku.ueba.dao.ActivityRecordDAO#index(cn.pku.ueba.model.activity.ActivityRecord)
+	 * @return ActivityRecordDAOImpl对象
 	 */
+	public static ActivityRecordDAOImpl getInstance() {
+		if (instance == null)
+			instance = new ActivityRecordDAOImpl();
+		return instance;
+	}
+
 	public void index(ActivityRecord activityRecord) {
 		Map<String, Object> json = ActivityRecordFactory.getJsonFromActivityRecord(activityRecord);
 		try {

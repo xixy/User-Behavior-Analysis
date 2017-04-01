@@ -6,7 +6,9 @@ package cn.pku.ueba.dao.factory;
 
 import static org.junit.Assert.fail;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import cn.pku.ueba.model.feature.Feature;
 import cn.pku.ueba.model.feature.FeatureVector;
@@ -14,6 +16,7 @@ import cn.pku.ueba.model.feature.FeatureVector;
 /**
  *
  */
+@FixMethodOrder(MethodSorters.JVM)
 public class FeatureVectorFactoryTest {
 
 	/**

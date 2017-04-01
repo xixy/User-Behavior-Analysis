@@ -4,9 +4,8 @@
  */
 package cn.pku.ueba.util;
 
-import java.util.Map;
+import static org.junit.Assert.fail;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -25,11 +24,10 @@ public class HttpClientUtilTest {
 	 */
 	@Test
 	public void testHttpclientGet() throws Exception {
+		@SuppressWarnings("deprecation")
 		String json = HttpClientUtil.httpclientGet(URLGet);
-		System.out.println(json);
-		ObjectMapper mapper = new ObjectMapper();
-		// 将json格式的string转化为Map，然后进行处理
-		Map m = mapper.readValue(json, Map.class);
+		if (json == null)
+			fail("HttpClient failed");
 
 	}
 

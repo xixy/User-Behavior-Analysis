@@ -58,9 +58,13 @@ public class ActivityRecordFactoryTest {
 		ActivityRecord ar = ActivityRecordFactory.getActivityRecordFromJson(result);
 		if (ar == null)
 			fail("ar==null");
+		// 保证可以嵌套拆解
 		if (!ar.getUser().getName().equals("张通"))
 			fail("GetActivityRedordFromJson failed");
 		if (!ar.getHost().getDepartment().equals(HostFactoryTest.host.getDepartment()))
+			fail("GetActivityRedordFromJson failed");
+		// 保证了类型正确
+		if (!(ar instanceof ADActivityRecord))
 			fail("GetActivityRedordFromJson failed");
 	}
 

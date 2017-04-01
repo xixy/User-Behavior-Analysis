@@ -5,7 +5,6 @@ package cn.pku.ueba.dao.impl;
  * @version V0.1 2017年3月23日 下午7:10:24
  */
 import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
@@ -18,7 +17,6 @@ import cn.pku.ueba.configure.Configure;
 import cn.pku.ueba.dao.HostDAO;
 import cn.pku.ueba.dao.factory.HostFactory;
 import cn.pku.ueba.model.Host;
-import cn.pku.ueba.model.HostType;
 import cn.pku.ueba.resource.HostLogField;
 import cn.pku.ueba.util.GrayLogUtil;
 
@@ -44,16 +42,9 @@ public class HostDAOImpl implements HostDAO {
 	 * @see cn.pku.ueba.dao.HostDAO#indexHost(cn.pku.ueba.model.Host)
 	 */
 	public void indexHost(Host host) {
+		// 转化为json对象
+		Map<String, Object> json = HostFactory.getJsonFromHost(host);
 		// 插入到graylog中
-		Map<String, Object> json = new HashMap<String, Object>();
-		json.put(HostLogField.name, host.getName());
-		json.put(HostLogField.ip, host.getIp());
-		json.put(HostLogField.macaddress, host.getMacaddress());
-		json.put(HostLogField.department, host.getDepartment());
-		json.put(HostLogField.id, host.getId());
-		json.put(HostLogField.risk, host.getRiskscore());
-		json.put(HostLogField.type, host.getType());
-
 		try {
 			GrayLogUtil.index(Configure.getIndex(), Configure.getHosttype(), json);
 		} catch (UnknownHostException e) {
@@ -79,29 +70,8 @@ public class HostDAOImpl implements HostDAO {
 		if (response.getHits().getHits().length > 0)
 			for (SearchHit hit : response.getHits().getHits()) {
 				Map<String, Object> fields = hit.getSource();
-				// name
-				String name = (String) fields.get(HostLogField.name);
-				host = HostFactory.getHost(name);
-
-				// department
-				String department = (String) fields.get(HostLogField.department);
-				host.setDepartment(department);
-				// risk
-				Double risk = (Double) fields.get(HostLogField.risk);
-				host.setRiskscore(risk);
-				// id
-				Integer id = (Integer) fields.get(HostLogField.id);
-				host.setId(id);
-				// ip
-				host.setIp(ip);
-				// mac address
-				String macaddress = (String) fields.get(HostLogField.macaddress);
-				host.setMacaddress(macaddress);
-				// mac address
-				HostType type = HostType.valueOf((String) fields.get(HostLogField.type));
-				host.setType(type);
+				host = HostFactory.getHostFromJson(fields);
 				break;
-
 			}
 
 		return host;

@@ -12,7 +12,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 /**
- *
+ * 在Java API不好用的情况下来使用HTTP API，尽量不使用吧
+ * 
+ * @deprecated
+ * @author xixy10@foxmail.com
  */
 public class HttpClientUtil {
 

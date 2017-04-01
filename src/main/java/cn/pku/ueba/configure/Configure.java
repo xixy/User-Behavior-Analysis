@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 /**
- * 关于Graylog的配置读取
+ * 关于Graylog的配置，从配置文件rawlog.property读取
  * 
  * @author xixy10@foxmail.com
  */
@@ -25,7 +25,7 @@ public class Configure {
 	static {
 		try {
 			// 通过配置文件来实现载入不同的类，实现不同的功能
-			pro.load(new FileInputStream("src/main/java/resources/rawlog.property"));
+			pro.load(new FileInputStream("src/main/resources/graylog.property"));
 			// 配置index和type
 			index = pro.getProperty("index");
 			rawlogtype = pro.getProperty("rawlogtype");

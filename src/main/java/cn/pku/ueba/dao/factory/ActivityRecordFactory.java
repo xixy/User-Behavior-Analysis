@@ -4,11 +4,7 @@
  */
 package cn.pku.ueba.dao.factory;
 
-import java.io.IOException;
 import java.util.Map;
-
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 
 import cn.pku.ueba.model.activity.ActivityRecord;
 import cn.pku.ueba.model.activity.ActivityType;
@@ -45,9 +41,6 @@ public abstract class ActivityRecordFactory {
 	 * @param json
 	 *            ES中存储的活动对象
 	 * @return 活动记录对象
-	 * @throws IOException
-	 * @throws JsonMappingException
-	 * @throws JsonGenerationException
 	 */
 	public static ActivityRecord getActivityRecordFromJson(Map<String, Object> json) {
 		ActivityType type = ActivityType.valueOf((String) json.get("type"));
