@@ -14,6 +14,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
+import cn.pku.ueba.configure.Configure;
 import cn.pku.ueba.dao.HostDAO;
 import cn.pku.ueba.dao.factory.HostFactory;
 import cn.pku.ueba.model.Host;
@@ -25,14 +26,6 @@ import cn.pku.ueba.util.GrayLogUtil;
  * HostDAO的实现
  */
 public class HostDAOImpl implements HostDAO {
-	/**
-	 * Host存储的index
-	 */
-	static String index = "graylog_0";
-	/**
-	 * Host存储的type
-	 */
-	static String type = "host";
 
 	private static HostDAOImpl instance;
 
@@ -62,7 +55,7 @@ public class HostDAOImpl implements HostDAO {
 		json.put(HostLogField.type, host.getType());
 
 		try {
-			GrayLogUtil.index(index, type, json);
+			GrayLogUtil.index(Configure.getIndex(), Configure.getHosttype(), json);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -77,7 +70,8 @@ public class HostDAOImpl implements HostDAO {
 		QueryBuilder queryterm = QueryBuilders.termQuery(HostLogField.ip, ip);
 		SearchResponse response = null;
 		try {
-			response = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
+			response = GrayLogUtil.search(Configure.getIndex(), Configure.getHosttype(),
+					SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -114,21 +108,22 @@ public class HostDAOImpl implements HostDAO {
 	}
 
 	/**
-
+	 * 
 	 * @see cn.pku.ueba.dao.HostDAO#deleteHost(java.lang.String)
 	 */
 	public void deleteHost(String ip) {
 		QueryBuilder queryterm = QueryBuilders.termQuery(HostLogField.ip, ip);
 		SearchResponse response = null;
 		try {
-			response = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
+			response = GrayLogUtil.search(Configure.getIndex(), Configure.getHosttype(),
+					SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 		if (response.getHits().getHits().length > 0)
 			for (SearchHit hit : response.getHits().getHits()) {
 				String id = hit.getId();
-				GrayLogUtil.delete(index, type, id);
+				GrayLogUtil.delete(Configure.getIndex(), Configure.getHosttype(), id);
 			}
 
 	}

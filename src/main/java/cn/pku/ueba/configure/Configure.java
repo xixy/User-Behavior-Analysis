@@ -1,0 +1,107 @@
+/**
+ * @author xixy10@foxmail.com
+ * @version V0.1 2017年3月31日 下午2:58:19
+ */
+package cn.pku.ueba.configure;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+
+/**
+ * 关于Graylog的配置读取
+ * 
+ * @author xixy10@foxmail.com
+ */
+public class Configure {
+	private static Properties pro = new Properties();
+	private static String index;
+	private static String rawlogtype;
+	private static String usertype;
+	private static String hosttype;
+	private static String activitytype;
+	private static String ip;
+	private static String port;
+
+	static {
+		try {
+			// 通过配置文件来实现载入不同的类，实现不同的功能
+			pro.load(new FileInputStream("src/main/java/resources/rawlog.property"));
+			// 配置index和type
+			index = pro.getProperty("index");
+			rawlogtype = pro.getProperty("rawlogtype");
+			usertype = pro.getProperty("usertype");
+			hosttype = pro.getProperty("hosttype");
+			activitytype = pro.getProperty("activitytype");
+			ip = pro.getProperty("ip");
+			port = pro.getProperty("port");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String getIndex() {
+		return index;
+	}
+
+	public static void setIndex(String index) {
+		Configure.index = index;
+	}
+
+	public static Properties getPro() {
+		return pro;
+	}
+
+	public static void setPro(Properties pro) {
+		Configure.pro = pro;
+	}
+
+	public static String getRawlogtype() {
+		return rawlogtype;
+	}
+
+	public static void setRawlogtype(String rawlogtype) {
+		Configure.rawlogtype = rawlogtype;
+	}
+
+	public static String getUsertype() {
+		return usertype;
+	}
+
+	public static void setUsertype(String usertype) {
+		Configure.usertype = usertype;
+	}
+
+	public static String getHosttype() {
+		return hosttype;
+	}
+
+	public static void setHosttype(String hosttype) {
+		Configure.hosttype = hosttype;
+	}
+
+	public static String getActivitytype() {
+		return activitytype;
+	}
+
+	public static void setActivitytype(String activitytype) {
+		Configure.activitytype = activitytype;
+	}
+
+	public static String getIp() {
+		return ip;
+	}
+
+	public static void setIp(String ip) {
+		Configure.ip = ip;
+	}
+
+	public static String getPort() {
+		return port;
+	}
+
+	public static void setPort(String port) {
+		Configure.port = port;
+	}
+
+}

@@ -15,12 +15,11 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
+import cn.pku.ueba.configure.Configure;
 import cn.pku.ueba.dao.ActivityRecordDAO;
-import cn.pku.ueba.dao.factory.ARFFactory;
+import cn.pku.ueba.dao.factory.ActivityRecordFactory;
 import cn.pku.ueba.model.User;
 import cn.pku.ueba.model.activity.ActivityRecord;
-import cn.pku.ueba.model.activity.ActivityType;
-import cn.pku.ueba.resource.activitylogfield.ADActivityLogField;
 import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 
@@ -28,14 +27,6 @@ import cn.pku.ueba.util.GrayLogUtil;
  * 用户活动DAO的实现
  */
 public class ActivityRecordDAOImpl implements ActivityRecordDAO {
-	/**
-	 * 用户活动记录存储的index
-	 */
-	static String index = "graylog_0";
-	/**
-	 * 用户活动记录存储的type
-	 */
-	static String type = "record";
 
 	/**
 	 * 将活动存储到GrayLog中，这个方法基本上不需要修改
@@ -45,10 +36,9 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 	 * @see cn.pku.ueba.dao.ActivityRecordDAO#index(cn.pku.ueba.model.activity.ActivityRecord)
 	 */
 	public void index(ActivityRecord activityRecord) {
-		Map<String, Object> json = ARFFactory.getActivityRecordFactoryInstance(activityRecord.getType())
-				.getJsonFromActivityRecord(activityRecord);
+		Map<String, Object> json = ActivityRecordFactory.getJsonFromActivityRecord(activityRecord);
 		try {
-			GrayLogUtil.index(index, type, json);
+			GrayLogUtil.index(Configure.getIndex(), Configure.getActivitytype(), json);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -68,7 +58,8 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 			filter = QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 					.gt(DateUtil.getLastDayESDate(interval));
 		try {
-			response = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter, 60);
+			response = GrayLogUtil.search(Configure.getIndex(), Configure.getActivitytype(),
+					SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter, 60);
 
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -79,9 +70,8 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 			Map<String, Object> json = hit.getSource();
 			// 然后将JSON转化为活动
 			// 首先获取活动类型
-			ActivityType type = (ActivityType) json.get(ADActivityLogField.activityType);
 			// 然后根据用户活动调用相应的ActivityRecordFactory实例来进行处理，返回活动记录对象
-			ActivityRecord ar = ARFFactory.getActivityRecordFactoryInstance(type).getActivityRecordFromJson(json);
+			ActivityRecord ar = ActivityRecordFactory.getActivityRecordFromJson(json);
 			ars.add(ar);
 		}
 		return ars;

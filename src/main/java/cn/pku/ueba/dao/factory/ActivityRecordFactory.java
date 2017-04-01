@@ -8,12 +8,11 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import cn.pku.ueba.model.activity.ActivityRecord;
 import cn.pku.ueba.model.activity.ActivityType;
+import cn.pku.ueba.util.JsonUtil;
 
 /**
  * 用来处理ActivityRecord对象
@@ -35,41 +34,9 @@ public abstract class ActivityRecordFactory {
 	 * @param activityrecord
 	 *            活动记录对象
 	 * @return json对象可以直接用于存储到ES中
-	 * @throws IOException
-	 * @throws JsonMappingException
-	 * @throws JsonGenerationException
 	 */
 	public static Map<String, Object> getJsonFromActivityRecord(ActivityRecord activityrecord) {
-		ObjectMapper mapper = new ObjectMapper();
-		String json = null;
-		try {
-			json = mapper.writeValueAsString(activityrecord);
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		@SuppressWarnings("unchecked")
-		Map<String, Object> result = null;
-		try {
-			result = mapper.readValue(json, Map.class);
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return result;
-
+		return JsonUtil.getJsonFromModelInstance(activityrecord);
 	}
 
 	/**
@@ -83,36 +50,10 @@ public abstract class ActivityRecordFactory {
 	 * @throws JsonGenerationException
 	 */
 	public static ActivityRecord getActivityRecordFromJson(Map<String, Object> json) {
-		ObjectMapper mapper = new ObjectMapper();
-		String s_json = null;
-		try {
-			s_json = mapper.writeValueAsString(json);
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		ActivityType type = ActivityType.valueOf((String) json.get("type"));
-		ActivityRecord ar = null;
-		try {
-			ar = mapper.readValue(s_json,
-					ARFFactory.getActivityRecordFactoryInstance(type).getActivityRecord().getClass());
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return ar;
+		Object obj = JsonUtil.getModelInstanceFromJson(json,
+				ARFFactory.getActivityRecordFactoryInstance(type).getActivityRecord().getClass());
+		return (ActivityRecord) obj;
 	}
 
 }
