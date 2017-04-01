@@ -28,7 +28,7 @@ import cn.pku.ueba.model.Host;
 import cn.pku.ueba.model.User;
 import cn.pku.ueba.model.activity.ActivityRecord;
 import cn.pku.ueba.model.activity.ActivityType;
-import cn.pku.ueba.resource.ADLogField;
+import cn.pku.ueba.resource.rawlogfield.ADLogField;
 import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 

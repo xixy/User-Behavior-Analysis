@@ -17,7 +17,6 @@ import cn.pku.ueba.configure.Configure;
 import cn.pku.ueba.dao.HostDAO;
 import cn.pku.ueba.dao.factory.HostFactory;
 import cn.pku.ueba.model.Host;
-import cn.pku.ueba.resource.HostLogField;
 import cn.pku.ueba.util.GrayLogUtil;
 
 /**
@@ -58,7 +57,7 @@ public class HostDAOImpl implements HostDAO {
 	public Host getHost(String ip) {
 
 		Host host = null;
-		QueryBuilder queryterm = QueryBuilders.termQuery(HostLogField.ip, ip);
+		QueryBuilder queryterm = QueryBuilders.termQuery("ip", ip);
 		SearchResponse response = null;
 		try {
 			response = GrayLogUtil.search(Configure.getIndex(), Configure.getHosttype(),
@@ -82,7 +81,7 @@ public class HostDAOImpl implements HostDAO {
 	 * @see cn.pku.ueba.dao.HostDAO#deleteHost(java.lang.String)
 	 */
 	public void deleteHost(String ip) {
-		QueryBuilder queryterm = QueryBuilders.termQuery(HostLogField.ip, ip);
+		QueryBuilder queryterm = QueryBuilders.termQuery("ip", ip);
 		SearchResponse response = null;
 		try {
 			response = GrayLogUtil.search(Configure.getIndex(), Configure.getHosttype(),
