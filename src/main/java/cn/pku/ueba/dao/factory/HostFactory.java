@@ -25,7 +25,7 @@ public class HostFactory {
 	 *            主机名称
 	 * @return 主机对象
 	 */
-	public static Host getHost(String name) {
+	public synchronized static Host getHost(String name) {
 		Host host = new Host();
 		host.setId(++hostid);
 		host.setName(name);

@@ -25,7 +25,7 @@ public class UserFactory {
 	 *            用户名称
 	 * @return 信息不完整、需要填充的用户对象
 	 */
-	public static User getUser(String name) {
+	public synchronized static User getUser(String name) {
 		User user = new User();
 		user.setId(++userid);
 		user.setName(name);
