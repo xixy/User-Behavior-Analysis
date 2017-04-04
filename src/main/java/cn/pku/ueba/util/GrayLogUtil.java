@@ -94,7 +94,7 @@ public class GrayLogUtil {
 			SearchResponse response = null;
 			if (filter != null)
 				response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
-						.setPostFilter(filter1).setPostFilter(filter).setFrom(0).setSize(size).setExplain(true)
+						.setPostFilter(filter).setPostFilter(filter1).setFrom(0).setSize(size).setExplain(true)
 						.execute().actionGet();
 			else if (filter1 != null)
 				response = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
@@ -104,6 +104,7 @@ public class GrayLogUtil {
 						.setFrom(0).setSize(size).setExplain(true).execute().actionGet();
 
 			if (response.getHits().getHits().length == 10000) {
+
 				// 如果需要继续fetch，那么就设置新的filter，然后构建新的search
 				SearchHit hit = response.getHits().getHits()[9999];
 				String timestamp = (String) hit.getSource().get("timestamp");
@@ -112,7 +113,6 @@ public class GrayLogUtil {
 				searchagain = true;
 			}
 
-			System.out.println(response.getHits().getHits()[0].getSource().get("timestamp"));
 			result.add(response);
 		}
 		return result;

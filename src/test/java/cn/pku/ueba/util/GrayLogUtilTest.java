@@ -84,7 +84,11 @@ public class GrayLogUtilTest {
 	@Test
 	public void testSearch2() throws UnknownHostException {
 		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
-		QueryBuilder filter = null;
+		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+				.gt(DateUtil.getLastDayESDate(100));
+		// QueryBuilder filter1 =
+		// QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+		// .gt(DateUtil.getLastDayESDate(1));
 		List<SearchResponse> responseList = GrayLogUtil.search(index, "message", SearchType.DFS_QUERY_THEN_FETCH,
 				queryterm, filter, 10000);
 		for (SearchResponse response : responseList) {
