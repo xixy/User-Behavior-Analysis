@@ -12,12 +12,20 @@ import org.junit.runners.MethodSorters;
 
 import cn.pku.ueba.model.feature.Feature;
 import cn.pku.ueba.model.feature.FeatureVector;
+import cn.pku.ueba.resource.featurefield.FeatureField;
 
 /**
  *
  */
 @FixMethodOrder(MethodSorters.JVM)
 public class FeatureVectorFactoryTest {
+	public static Feature f = FeatureFactory.getFeature();
+	public static FeatureVector fv = FeatureVectorFactory.getFeatureVector();
+
+	static {
+		f.setKey(FeatureField.count);
+		f.setValue(100);
+	}
 
 	/**
 	 * Test method for
@@ -25,7 +33,7 @@ public class FeatureVectorFactoryTest {
 	 */
 	@Test
 	public void testGetFeatureVector() {
-		FeatureVector fv = FeatureVectorFactory.getFeatureVector();
+
 		if (fv == null)
 			fail("GetFeatureVector failed");
 	}
@@ -37,9 +45,6 @@ public class FeatureVectorFactoryTest {
 	 */
 	@Test
 	public void testAddFeature() {
-
-		FeatureVector fv = FeatureVectorFactory.getFeatureVector();
-		Feature f = FeatureFactory.getFeature();
 		FeatureVectorFactory.addFeature(f, fv);
 		if (fv.getFeatures().size() != 1)
 			fail("AddFeatur failed");
