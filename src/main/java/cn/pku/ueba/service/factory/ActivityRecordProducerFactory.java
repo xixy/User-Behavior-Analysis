@@ -16,7 +16,7 @@ import cn.pku.ueba.service.impl.ADActivityRecordProducer;
 public class ActivityRecordProducerFactory {
 
 	/**
-	 * 通过活动类型获取到相应的ActivityRecordProducer，还没有完成
+	 * 通过活动类型获取到相应的ActivityRecordProducer，还没有完成，需要逐渐添加；采用了单例模式，开销较小
 	 * 
 	 * @param aType
 	 *            活动类型
