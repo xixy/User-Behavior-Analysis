@@ -25,6 +25,11 @@ public class FeatureVector {
 	 */
 	private Entity entity;
 
+	/**
+	 * 该特征向量对应的时间戳
+	 */
+	private String timestamp;
+
 	public void outPutFeatureVector(BufferedWriter bf) {
 		try {
 			bf.append(this.toString());
@@ -51,5 +56,13 @@ public class FeatureVector {
 
 	public void setFeatures(List<Feature> features) {
 		this.features = features;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
 	}
 }
