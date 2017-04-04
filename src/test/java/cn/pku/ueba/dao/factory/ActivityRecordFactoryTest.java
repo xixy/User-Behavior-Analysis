@@ -6,7 +6,6 @@ package cn.pku.ueba.dao.factory;
 
 import static org.junit.Assert.fail;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.junit.FixMethodOrder;
@@ -15,6 +14,7 @@ import org.junit.runners.MethodSorters;
 
 import cn.pku.ueba.model.activity.ADActivityRecord;
 import cn.pku.ueba.model.activity.ActivityRecord;
+import cn.pku.ueba.util.DateUtil;
 
 /**
  *
@@ -28,7 +28,7 @@ public class ActivityRecordFactoryTest {
 		ActivityRecord ar = new ADActivityRecord();
 		ar.setUser(UserFactoryTest.user);
 		ar.setHost(HostFactoryTest.host);
-		ar.setDate(new Date());
+		ar.setTimestamp(DateUtil.getESDate());
 		ar.setDesIp("192.168.200.160");
 		ar.setDesPort("80");
 		ar.setSourceIp("192.168.100.160");

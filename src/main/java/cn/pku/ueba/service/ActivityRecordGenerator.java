@@ -15,6 +15,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 
+import cn.pku.ueba.configure.Configure;
 import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 
@@ -24,29 +25,14 @@ import cn.pku.ueba.util.GrayLogUtil;
  * 
  * @author xixy10@foxmail.com
  */
-public class ActivityRecordGenerator {
+public class ActivityRecordGenerator implements Runnable {
 
-	private static Properties pro = new Properties();
-	private static String index;
-	private static String type;
-
-	static {
-		try {
-			// 通过配置文件来实现载入不同的类，实现不同的功能
-			pro.load(new FileInputStream("src/main/java/resources/rawlog.property"));
-			// 配置index和type
-			index = pro.getProperty("index");
-			type = pro.getProperty("type");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * @param args
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Runnable#run()
 	 */
-	public static void main(String[] args) {
+	public void run() {
 		// QueryBuilder queryterm = QueryBuilders.termQuery("winlogbeat_task",
 		// "Kerberos 身份验证服务");
 		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
@@ -54,8 +40,8 @@ public class ActivityRecordGenerator {
 				.gt(DateUtil.getLastDayESDate(3));// 过去一小时吧还是todo
 		List<SearchResponse> responseList = null;
 		try {
-			responseList = GrayLogUtil.search(getIndex(), getType(), SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter,
-					10000);
+			responseList = GrayLogUtil.search(Configure.getIndex(), Configure.getRawlogtype(),
+					SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter, 10000);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -66,21 +52,5 @@ public class ActivityRecordGenerator {
 
 			}
 
-	}
-
-	public static String getIndex() {
-		return index;
-	}
-
-	public static void setIndex(String index) {
-		ActivityRecordGenerator.index = index;
-	}
-
-	public static String getType() {
-		return type;
-	}
-
-	public static void setType(String type) {
-		ActivityRecordGenerator.type = type;
 	}
 }

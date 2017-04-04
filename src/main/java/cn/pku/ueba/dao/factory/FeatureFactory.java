@@ -11,6 +11,7 @@ import cn.pku.ueba.model.activity.ActivityRecord;
 import cn.pku.ueba.model.activity.ActivityType;
 import cn.pku.ueba.model.feature.Feature;
 import cn.pku.ueba.resource.featurefield.FeatureField;
+import cn.pku.ueba.util.DateUtil;
 
 /**
  * 特征Factory
@@ -115,9 +116,9 @@ public class FeatureFactory {
 	 */
 	public static long getMaxInterval(List<ActivityRecord> ars) {
 		long maxInterval = 0;
-		Date old = ars.get(0).getDate();
+		Date old = DateUtil.getDateFromESDate(ars.get(0).getTimestamp());
 		for (ActivityRecord ar : ars) {
-			Date date = ar.getDate();
+			Date date = DateUtil.getDateFromESDate(ar.getTimestamp());
 			long interval = date.getTime() - old.getTime();
 			if (interval > maxInterval)
 				maxInterval = interval;
@@ -135,9 +136,9 @@ public class FeatureFactory {
 	 */
 	public static long getMinInterval(List<ActivityRecord> ars) {
 		long minInterval = 24 * 60 * 60 * 1000;// 初始设置为1天
-		Date old = ars.get(0).getDate();
+		Date old = DateUtil.getDateFromESDate(ars.get(0).getTimestamp());
 		for (ActivityRecord ar : ars) {
-			Date date = ar.getDate();
+			Date date = DateUtil.getDateFromESDate(ar.getTimestamp());
 			long interval = date.getTime() - old.getTime();
 			if (interval < minInterval)
 				minInterval = interval;
@@ -145,7 +146,5 @@ public class FeatureFactory {
 		}
 		return minInterval / 1000;
 	}
-	
-	
 
 }

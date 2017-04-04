@@ -4,8 +4,6 @@
  */
 package cn.pku.ueba.model.activity;
 
-import java.util.Date;
-
 import cn.pku.ueba.model.Host;
 import cn.pku.ueba.model.User;
 
@@ -16,7 +14,7 @@ import cn.pku.ueba.model.User;
 public abstract class ActivityRecord {
 	private User user;// 表示活动的主题user
 	private Host host;// 表示user的活动发生的机器，这个看怎么定义了
-	private Date date;// 时间
+	private String timestamp;// 时间
 	private ActivityType type;// 活动类型，可以直接存到
 	private String sourceIp;// 源ip
 	private String sourcePort;// 源port
@@ -39,12 +37,12 @@ public abstract class ActivityRecord {
 		this.host = host;
 	}
 
-	public Date getDate() {
-		return date;
+	public String getTimestamp() {
+		return timestamp;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setTimestamp(String date) {
+		this.timestamp = date;
 	}
 
 	public ActivityType getType() {

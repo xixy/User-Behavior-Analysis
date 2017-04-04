@@ -19,7 +19,7 @@ public class DateUtil {
 	/**
 	 * iso8601 时间格式
 	 */
-	static SimpleDateFormat dateiso8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	static SimpleDateFormat dateiso8601 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 	/**
 	 * 标准date格式
 	 */
@@ -79,5 +79,23 @@ public class DateUtil {
 		int day = c.get(Calendar.DATE);
 		c.set(Calendar.DATE, day - interval);
 		return c.getTime();
+	}
+
+	/**
+	 * 将ESDate转换为Date对象
+	 * 
+	 * @param esDate
+	 *            ESDate格式的字符串
+	 * @return Date对象
+	 */
+	public static Date getDateFromESDate(String esDate) {
+		Date date = null;
+		try {
+			date = dateiso8601.parse(esDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return date;
 	}
 }
