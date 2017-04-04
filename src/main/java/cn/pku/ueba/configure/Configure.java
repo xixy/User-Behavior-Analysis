@@ -42,76 +42,39 @@ public class Configure {
 		}
 	}
 
-	public static String getIndex() {
-		return index;
-	}
-
-	public static void setIndex(String index) {
-		Configure.index = index;
-	}
-
 	public static Properties getPro() {
 		return pro;
 	}
 
-	public static void setPro(Properties pro) {
-		Configure.pro = pro;
+	public static String getIndex() {
+		return index;
 	}
 
 	public static String getRawlogtype() {
 		return rawlogtype;
 	}
 
-	public static void setRawlogtype(String rawlogtype) {
-		Configure.rawlogtype = rawlogtype;
-	}
-
 	public static String getUsertype() {
 		return usertype;
-	}
-
-	public static void setUsertype(String usertype) {
-		Configure.usertype = usertype;
 	}
 
 	public static String getHosttype() {
 		return hosttype;
 	}
 
-	public static void setHosttype(String hosttype) {
-		Configure.hosttype = hosttype;
-	}
-
 	public static String getActivitytype() {
 		return activitytype;
-	}
-
-	public static void setActivitytype(String activitytype) {
-		Configure.activitytype = activitytype;
 	}
 
 	public static String getIp() {
 		return ip;
 	}
 
-	public static void setIp(String ip) {
-		Configure.ip = ip;
-	}
-
 	public static int getPort() {
 		return port;
-	}
-
-	public static void setPort(int port) {
-		Configure.port = port;
 	}
 
 	public static String getClustername() {
 		return clustername;
 	}
-
-	public static void setClustername(String clustername) {
-		Configure.clustername = clustername;
-	}
-
 }

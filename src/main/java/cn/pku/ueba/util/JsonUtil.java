@@ -17,7 +17,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  */
 public class JsonUtil {
 	/**
-	 * 从模型实例得到Json数据
+	 * 从模型实例得到Json数据，包括用户活动记录、主机、用户
 	 * 
 	 * @param obj
 	 *            模型实例
@@ -50,13 +50,13 @@ public class JsonUtil {
 	}
 
 	/**
-	 * 从Json中获取到模型对象
+	 * 从Json中获取到模型对象，包括用户活动记录、主机、用户
 	 * 
 	 * @param json
 	 *            json格式的数据
 	 * @param valueType
 	 *            对应的模型对象
-	 * @return
+	 * @return 得到的模型对象
 	 */
 	public static Object getModelInstanceFromJson(Map<String, Object> json, Class<?> valueType) {
 		ObjectMapper mapper = new ObjectMapper();
