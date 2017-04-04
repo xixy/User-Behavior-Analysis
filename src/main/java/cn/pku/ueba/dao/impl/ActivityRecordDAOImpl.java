@@ -61,7 +61,7 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO {
 		List<SearchResponse> responseList = null;
 		QueryBuilder filter = null;
 		if (interval != -1)
-			filter = QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+			filter = QueryBuilders.rangeQuery("timestamp").format(DateUtil.dateiso8601.toPattern())
 					.gt(DateUtil.getLastDayESDate(interval));
 		try {
 			responseList = GrayLogUtil.search(Configure.getIndex(), Configure.getActivitytype(),

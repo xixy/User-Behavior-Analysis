@@ -30,16 +30,14 @@ import cn.pku.ueba.util.RawLogUtil;
  */
 public class ActivityRecordGenerator implements Runnable {
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 用来持续对原始日志进行读取，并逐条处理产生用户活动记录
 	 * 
 	 * @see java.lang.Runnable#run()
 	 */
 	public void run() {
-		// QueryBuilder queryterm = QueryBuilders.termQuery("winlogbeat_task",
-		// "Kerberos 身份验证服务");
 		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
-		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format(DateUtil.dateiso8601.toPattern())
 				.gt(DateUtil.getLastDayESDate(3));// 过去一小时吧还是todo
 		List<SearchResponse> responseList = null;
 		try {

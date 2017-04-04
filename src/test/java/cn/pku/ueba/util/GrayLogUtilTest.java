@@ -20,12 +20,13 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import cn.pku.ueba.configure.Configure;
+
 /**
  *
  */
 @FixMethodOrder(MethodSorters.JVM) // 指定测试方法按定义的顺序执行
 public class GrayLogUtilTest {
-	public static String index = "graylog_0";
 	public static String type = "test";
 
 	/**
@@ -50,7 +51,7 @@ public class GrayLogUtilTest {
 	public void testIndex() throws UnknownHostException {
 		Map<String, Object> json = new HashMap<String, Object>();
 		json.put("test", "test");
-		GrayLogUtil.index(index, type, json);
+		GrayLogUtil.index(Configure.getIndex(), type, json);
 	}
 
 	/**
@@ -64,8 +65,8 @@ public class GrayLogUtilTest {
 	public void testSearch1() throws UnknownHostException {
 		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
 		QueryBuilder filter = null;
-		List<SearchResponse> responseList = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm,
-				filter, 10000);
+		List<SearchResponse> responseList = GrayLogUtil.search(Configure.getIndex(), type,
+				SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter, 10000);
 		for (SearchResponse response : responseList) {
 			System.out.println(response.getHits().getHits().length);
 			if (response.getHits().getHits().length == 0)
@@ -84,13 +85,10 @@ public class GrayLogUtilTest {
 	@Test
 	public void testSearch2() throws UnknownHostException {
 		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
-		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format(DateUtil.dateiso8601.toPattern())
 				.gt(DateUtil.getLastDayESDate(100));
-		// QueryBuilder filter1 =
-		// QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-		// .gt(DateUtil.getLastDayESDate(1));
-		List<SearchResponse> responseList = GrayLogUtil.search(index, "message", SearchType.DFS_QUERY_THEN_FETCH,
-				queryterm, filter, 10000);
+		List<SearchResponse> responseList = GrayLogUtil.search(Configure.getIndex(), Configure.getRawlogtype(),
+				SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter, 10000);
 		for (SearchResponse response : responseList) {
 			System.out.println(response.getHits().getHits().length);
 			if (response.getHits().getHits().length == 0)
@@ -109,7 +107,8 @@ public class GrayLogUtilTest {
 		QueryBuilder queryterm = QueryBuilders.termQuery("test", "test");
 		List<SearchResponse> responseList = null;
 		try {
-			responseList = GrayLogUtil.search(index, type, SearchType.DFS_QUERY_THEN_FETCH, queryterm, null, 1);
+			responseList = GrayLogUtil.search(Configure.getIndex(), type, SearchType.DFS_QUERY_THEN_FETCH, queryterm,
+					null, 1);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -117,7 +116,7 @@ public class GrayLogUtilTest {
 			if (response.getHits().getHits().length > 0)
 				for (SearchHit hit : response.getHits().getHits()) {
 					String id = hit.getId();
-					GrayLogUtil.delete(index, type, id);
+					GrayLogUtil.delete(Configure.getIndex(), type, id);
 				}
 			else
 				fail("GrayLogUtil cannot delete");

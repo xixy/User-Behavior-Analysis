@@ -49,7 +49,7 @@ public class ADActivityRecordProducerTest {
 		List<ActivityRecord> records = new ArrayList<ActivityRecord>();
 
 		QueryBuilder queryterm = QueryBuilders.termQuery("winlogbeat_task", "Kerberos 身份验证服务");
-		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format(DateUtil.dateiso8601.toPattern())
 				.gt(DateUtil.getLastDayESDate(3));// 过去一小时吧还是todo
 		List<SearchResponse> responseList = null;
 		try {

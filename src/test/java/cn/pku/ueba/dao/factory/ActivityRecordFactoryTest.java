@@ -23,9 +23,10 @@ import cn.pku.ueba.util.DateUtil;
 public class ActivityRecordFactoryTest {
 
 	public static Map<String, Object> result = null;
+	public static ActivityRecord ar = new ADActivityRecord();
 
 	static {
-		ActivityRecord ar = new ADActivityRecord();
+
 		ar.setUser(UserFactoryTest.user);
 		ar.setHost(HostFactoryTest.host);
 		ar.setTimestamp(DateUtil.getESDate());

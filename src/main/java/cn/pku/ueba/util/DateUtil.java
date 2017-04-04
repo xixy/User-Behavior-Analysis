@@ -19,11 +19,11 @@ public class DateUtil {
 	/**
 	 * iso8601 时间格式
 	 */
-	static SimpleDateFormat dateiso8601 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	public static SimpleDateFormat dateiso8601 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 	/**
 	 * 标准date格式
 	 */
-	static SimpleDateFormat standarddate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	public static SimpleDateFormat standarddate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
 	/**
 	 * 得到现在的时刻点，转换为ES时间格式的输出

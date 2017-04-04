@@ -81,10 +81,6 @@ public class GrayLogUtil {
 	public static List<SearchResponse> search(String index, String type, SearchType searchtype, QueryBuilder queryterm,
 			QueryBuilder filter, int size) throws UnknownHostException {
 		List<SearchResponse> result = new ArrayList<SearchResponse>();
-
-		// QueryBuilder filter1 =
-		// QueryBuilders.rangeQuery("timestamp").format("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-		// .gt(DateUtil.getLastDayESDate(1));
 		QueryBuilder filter1 = filter;
 
 		Boolean searchagain = true;

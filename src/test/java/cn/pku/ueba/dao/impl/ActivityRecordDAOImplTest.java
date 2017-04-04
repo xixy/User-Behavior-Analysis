@@ -4,9 +4,15 @@
  */
 package cn.pku.ueba.dao.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+
+import java.util.List;
 
 import org.junit.Test;
+
+import cn.pku.ueba.dao.factory.ActivityRecordFactoryTest;
+import cn.pku.ueba.model.activity.ADActivityRecord;
+import cn.pku.ueba.model.activity.ActivityRecord;
 
 /**
  *
@@ -20,7 +26,7 @@ public class ActivityRecordDAOImplTest {
 	 */
 	@Test
 	public void testIndex() {
-		fail("Not yet implemented");
+		ActivityRecordDAOImpl.getInstance().index(ActivityRecordFactoryTest.ar);
 	}
 
 	/**
@@ -30,8 +36,12 @@ public class ActivityRecordDAOImplTest {
 	 */
 	@Test
 	public void testGetActivityRecordByUser() {
-		ActivityRecordDAOImpl ardi = new ActivityRecordDAOImpl();
-		ardi.getActivityRecordByUser(null, 30);
+		List<ActivityRecord> result = ActivityRecordDAOImpl.getInstance().getActivityRecordByUser(null, 30);
+		for (ActivityRecord ar : result) {
+			if (!(ar instanceof ADActivityRecord))
+				fail("getActivityRecordByUser failed");
+
+		}
 	}
 
 }

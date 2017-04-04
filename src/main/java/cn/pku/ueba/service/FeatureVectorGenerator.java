@@ -11,8 +11,8 @@ package cn.pku.ueba.service;
  */
 public class FeatureVectorGenerator implements Runnable {
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 对用户活动进行读取，并生成特征向量，并进行持久化
 	 * 
 	 * @see java.lang.Runnable#run()
 	 */
