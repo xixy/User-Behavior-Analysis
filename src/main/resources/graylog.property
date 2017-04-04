@@ -6,3 +6,4 @@ rawlogtype=message
 usertype=user
 hosttype=host
 activitytype=activity
+featuretype=feature

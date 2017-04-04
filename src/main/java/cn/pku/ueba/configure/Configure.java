@@ -22,6 +22,7 @@ public class Configure {
 	private static String ip;
 	private static int port;
 	private static String clustername;
+	private static String featuretype;
 
 	static {
 		try {
@@ -36,6 +37,7 @@ public class Configure {
 			ip = pro.getProperty("ip");
 			port = Integer.parseInt(pro.getProperty("port"));
 			clustername = pro.getProperty("clustername");
+			featuretype = pro.getProperty("featuretype");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,5 +78,9 @@ public class Configure {
 
 	public static String getClustername() {
 		return clustername;
+	}
+
+	public static String getFeaturetype() {
+		return featuretype;
 	}
 }
