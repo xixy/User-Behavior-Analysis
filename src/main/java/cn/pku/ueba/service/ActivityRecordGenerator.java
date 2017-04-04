@@ -57,7 +57,6 @@ public class ActivityRecordGenerator implements Runnable {
 						.getActivityRecordProducerByActivityType(aType).getActivityRecordFromRawLog(hit.getSource());
 				// 对生成的活动记录进行持久化
 				ActivityRecordDAOImpl.getInstance().index(activityRecord);
-
 			}
 
 	}

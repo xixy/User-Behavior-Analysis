@@ -56,7 +56,7 @@ public class DateUtil {
 	 * @return isodate格式对象
 	 */
 	public static String getLastDayESDate(int interval) {
-		return toESDate(getYesterdayDate(interval));
+		return toESDate(getLastDate(interval));
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class DateUtil {
 	 *            天数
 	 * @return 标准date对象
 	 */
-	public static Date getYesterdayDate(int interval) {
+	public static Date getLastDate(int interval) {
 		String now = standarddate.format(new Date());
 		Calendar c = Calendar.getInstance();
 		Date date = null;
@@ -93,7 +93,6 @@ public class DateUtil {
 		try {
 			date = dateiso8601.parse(esDate);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return date;

@@ -52,11 +52,11 @@ public class DateUtilTest {
 	}
 
 	/**
-	 * Test method for {@link cn.pku.ueba.util.DateUtil#getYesterdayDate(int)}.
+	 * Test method for {@link cn.pku.ueba.util.DateUtil#getLastDate(int)}.
 	 */
 	@Test
 	public void testGetYesterdayDate() {
-		Date date = DateUtil.getYesterdayDate(2);
+		Date date = DateUtil.getLastDate(2);
 		if (date == null)
 			fail("getYesterdayDate failed");
 
