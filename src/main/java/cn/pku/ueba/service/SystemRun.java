@@ -15,6 +15,7 @@ public class SystemRun {
 	 * 用来启动两个线程，一个用来生成用户活动，一个用来生成特征
 	 * 
 	 * @param args
+	 *            nothing
 	 */
 	public static void main(String[] args) {
 		// 创建生成活动的线程

@@ -19,6 +19,8 @@ public abstract class ActivityRecordProducer {
 	/**
 	 * 从一条原生日志记录中提取活动记录
 	 * 
+	 * @param source
+	 *            json格式对象
 	 * @return 活动记录对象
 	 */
 	public abstract ActivityRecord getActivityRecordFromRawLog(Map<String, Object> source);
@@ -34,7 +36,7 @@ public abstract class ActivityRecordProducer {
 	/**
 	 * 活动记录Producer所能处理的活动类型
 	 */
-	
+
 	private ActivityType aType;
 
 	public String getIndex() {
