@@ -73,4 +73,27 @@ public class DateUtilTest {
 			fail("getDateFromESDate failed");
 	}
 
+	/**
+	 * Test method for {@link cn.pku.ueba.util.DateUtil#getSharpTimeInMinute()}.
+	 */
+	@Test
+	public void testGetSharpTimeInMinute() {
+		Date date = new Date();
+		Date date1 = DateUtil.getSharpTimeInMinute(date);
+		if (date1.after(date))
+			fail("GetSharpTimeInHour() failed");
+
+	}
+
+	/**
+	 * Test method for {@link cn.pku.ueba.util.DateUtil#getSharpTimeInHour()}.
+	 */
+	@Test
+	public void testGetSharpTimeInHour() {
+		Date date = new Date();
+		Date date1 = DateUtil.getSharpTimeInHour(date);
+		if (date1.after(date))
+			fail("GetSharpTimeInHour() failed");
+	}
+
 }

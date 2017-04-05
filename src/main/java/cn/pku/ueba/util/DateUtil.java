@@ -97,4 +97,42 @@ public class DateUtil {
 		}
 		return date;
 	}
+
+	/**
+	 * 获取到当前时刻的分钟整点时间，
+	 * <p>
+	 * 例如2017-04-05 10:03:30.123，应该得到的是2017-04-05 10:03:00.000
+	 * </p>
+	 * 
+	 * @param date
+	 *            时刻点
+	 * @return 返回该时刻点的分钟整点时间
+	 */
+	public static Date getSharpTimeInMinute(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		return c.getTime();
+	}
+
+	/**
+	 * 获取到当前时刻的分钟整点时间，
+	 * <p>
+	 * 例如2017-04-05 10:03:30.123，应该得到的是2017-04-05 10:00:00.000
+	 * </p>
+	 * 
+	 * @param date
+	 *            时刻点
+	 * @return 返回该时刻点的分钟整点时间
+	 */
+	public static Date getSharpTimeInHour(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		return c.getTime();
+	}
+
 }
