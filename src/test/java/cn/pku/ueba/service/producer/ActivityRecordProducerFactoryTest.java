@@ -1,17 +1,14 @@
 /**
  * @author xixy10@foxmail.com
- * @version V0.1 2017年3月29日 下午4:36:03
+ * @version V0.1 2017年4月5日 下午4:58:55
  */
-package cn.pku.ueba.service.factory;
+package cn.pku.ueba.service.producer;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import cn.pku.ueba.model.activity.ActivityType;
-import cn.pku.ueba.service.producer.ADActivityRecordProducer;
-import cn.pku.ueba.service.producer.ActivityRecordProducer;
-import cn.pku.ueba.service.producer.ActivityRecordProducerFactory;
 
 /**
  *
