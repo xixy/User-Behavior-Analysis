@@ -94,10 +94,8 @@ public class DateUtil {
 	public static Date getLastMinuteDate(Date date, int interval) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-		System.out.println(c.getTime());
 		int millisecond = c.get(Calendar.MILLISECOND);
 		c.add(Calendar.SECOND, -60);
-
 		c.set(Calendar.MILLISECOND, millisecond);
 		return c.getTime();
 	}
