@@ -29,6 +29,7 @@ import cn.pku.ueba.model.User;
 import cn.pku.ueba.model.activity.ActivityRecord;
 import cn.pku.ueba.model.activity.ActivityType;
 import cn.pku.ueba.resource.rawlogfield.ADLogField;
+import cn.pku.ueba.service.producer.ADActivityRecordProducer;
 import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 
@@ -40,7 +41,7 @@ public class ADActivityRecordProducerTest {
 
 	/**
 	 * Test method for
-	 * {@link cn.pku.ueba.service.impl.ADActivityRecordProducer#getActivityRecordFromRawLog(java.util.Map)}
+	 * {@link cn.pku.ueba.service.producer.ADActivityRecordProducer#getActivityRecordFromRawLog(java.util.Map)}
 	 * .
 	 */
 	@Test
@@ -100,7 +101,7 @@ public class ADActivityRecordProducerTest {
 
 	/**
 	 * Test method for
-	 * {@link cn.pku.ueba.service.impl.ADActivityRecordProducer#getInstance()}.
+	 * {@link cn.pku.ueba.service.producer.ADActivityRecordProducer#getInstance()}.
 	 */
 	@Test
 	public void testGetInstance() {

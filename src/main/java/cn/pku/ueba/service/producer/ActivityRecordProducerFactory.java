@@ -2,11 +2,9 @@
  * @author xixy10@foxmail.com
  * @version V0.1 2017年3月29日 下午4:24:43
  */
-package cn.pku.ueba.service.factory;
+package cn.pku.ueba.service.producer;
 
 import cn.pku.ueba.model.activity.ActivityType;
-import cn.pku.ueba.service.ActivityRecordProducer;
-import cn.pku.ueba.service.impl.ADActivityRecordProducer;
 
 /**
  * ActivityRecordProducer的工厂类，用来根据活动类型返回ActivityRecordProducer

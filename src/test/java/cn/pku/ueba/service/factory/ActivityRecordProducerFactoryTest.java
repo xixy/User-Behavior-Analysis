@@ -9,8 +9,9 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import cn.pku.ueba.model.activity.ActivityType;
-import cn.pku.ueba.service.ActivityRecordProducer;
-import cn.pku.ueba.service.impl.ADActivityRecordProducer;
+import cn.pku.ueba.service.producer.ADActivityRecordProducer;
+import cn.pku.ueba.service.producer.ActivityRecordProducer;
+import cn.pku.ueba.service.producer.ActivityRecordProducerFactory;
 
 /**
  *
@@ -19,7 +20,7 @@ public class ActivityRecordProducerFactoryTest {
 
 	/**
 	 * Test method for
-	 * {@link cn.pku.ueba.service.factory.ActivityRecordProducerFactory#getActivityRecordProducerByActivityType(cn.pku.ueba.model.activity.ActivityType)}
+	 * {@link cn.pku.ueba.service.producer.ActivityRecordProducerFactory#getActivityRecordProducerByActivityType(cn.pku.ueba.model.activity.ActivityType)}
 	 * .
 	 */
 	@Test

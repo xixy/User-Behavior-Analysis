@@ -2,7 +2,7 @@
  * @author xixy10@foxmail.com
  * @version V0.1 2017年3月23日 下午7:10:24
  */
-package cn.pku.ueba.service.impl;
+package cn.pku.ueba.service.producer;
 
 import java.util.Date;
 import java.util.Map;
@@ -15,7 +15,6 @@ import cn.pku.ueba.model.User;
 import cn.pku.ueba.model.activity.ActivityRecord;
 import cn.pku.ueba.model.activity.ActivityType;
 import cn.pku.ueba.resource.rawlogfield.ADLogField;
-import cn.pku.ueba.service.ActivityRecordProducer;
 
 /**
  * AD用户活动的产生类

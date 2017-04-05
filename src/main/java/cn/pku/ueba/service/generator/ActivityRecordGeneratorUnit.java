@@ -18,7 +18,7 @@ import cn.pku.ueba.configure.Configure;
 import cn.pku.ueba.dao.impl.ActivityRecordDAOImpl;
 import cn.pku.ueba.model.activity.ActivityRecord;
 import cn.pku.ueba.model.activity.ActivityType;
-import cn.pku.ueba.service.factory.ActivityRecordProducerFactory;
+import cn.pku.ueba.service.producer.ActivityRecordProducerFactory;
 import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 import cn.pku.ueba.util.RawLogUtil;
