@@ -25,6 +25,11 @@ public class DateUtil {
 	 */
 	public static SimpleDateFormat standarddate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
+	private static long second = 1000;
+	private static long minute = 60 * second;
+	private static long hour = 60 * minute;
+	private static long day = 24 * hour;
+
 	/**
 	 * 得到现在的时刻点，转换为ES时间格式的输出
 	 * 
@@ -67,18 +72,9 @@ public class DateUtil {
 	 * @return 标准date对象
 	 */
 	public static Date getLastDate(int interval) {
-		String now = standarddate.format(new Date());
-		Calendar c = Calendar.getInstance();
-		Date date = null;
-		try {
-			date = standarddate.parse(now);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		c.setTime(date);
-		int day = c.get(Calendar.DATE);
-		c.set(Calendar.DATE, day - interval);
-		return c.getTime();
+		Date date = new Date();
+		Date result = new Date(date.getTime() - day * interval);
+		return result;
 	}
 
 	/**
@@ -92,12 +88,9 @@ public class DateUtil {
 	 * @return 标准date对象
 	 */
 	public static Date getLastMinuteDate(Date date, int interval) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		int millisecond = c.get(Calendar.MILLISECOND);
-		c.add(Calendar.SECOND, -60);
-		c.set(Calendar.MILLISECOND, millisecond);
-		return c.getTime();
+		Date date1 = new Date(date.getTime());
+		date1.setTime(date1.getTime() - interval * minute);
+		return date1;
 	}
 
 	/**
