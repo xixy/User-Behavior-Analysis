@@ -4,6 +4,9 @@
  */
 package cn.pku.ueba.service;
 
+import cn.pku.ueba.service.generator.ActivityRecordGeneratorUnit;
+import cn.pku.ueba.service.generator.FeatureVectorGeneratorUnit;
+
 /**
  * 系统运行的类，包含了main函数
  * 
@@ -19,9 +22,9 @@ public class SystemRun {
 	 */
 	public static void main(String[] args) {
 		// 创建生成活动的线程
-		Thread t1 = new Thread(new ActivityRecordGenerator());
+		Thread t1 = new Thread(new ActivityRecordGeneratorUnit());
 		// 创建提取特征的线程
-		Thread t2 = new Thread(new FeatureVectorGenerator());
+		Thread t2 = new Thread(new FeatureVectorGeneratorUnit());
 
 		// 线程开始执行
 		t1.start();
