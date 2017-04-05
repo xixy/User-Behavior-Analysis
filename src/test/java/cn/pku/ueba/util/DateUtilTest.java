@@ -96,4 +96,17 @@ public class DateUtilTest {
 			fail("GetSharpTimeInHour() failed");
 	}
 
+	/**
+	 * Test method for {@link cn.pku.ueba.util.DateUtil#getLastMinuteDate(int)}.
+	 */
+	@Test
+	public void testGetLastMinuteDate() {
+		Date date = new Date();
+		Date date1 = DateUtil.getLastMinuteDate(date, 10);
+		long interval = date.getTime() - date1.getTime();
+		if (interval != 10 * 60 * 100)
+			fail("GetLastMinuteDate failed");
+
+	}
+
 }

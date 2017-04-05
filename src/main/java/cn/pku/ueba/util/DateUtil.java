@@ -82,6 +82,27 @@ public class DateUtil {
 	}
 
 	/**
+	 * 得到过去若干分钟的时刻点
+	 * <p>
+	 * 例如2017-04-05 10:03:30.123，应该得到的是2017-04-05 10:02:30.123
+	 * </p>
+	 * 
+	 * @param interval
+	 *            分钟数
+	 * @return 标准date对象
+	 */
+	public static Date getLastMinuteDate(Date date, int interval) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		System.out.println(c.getTime());
+		int millisecond = c.get(Calendar.MILLISECOND);
+		c.add(Calendar.SECOND, -60);
+
+		c.set(Calendar.MILLISECOND, millisecond);
+		return c.getTime();
+	}
+
+	/**
 	 * 将ESDate转换为Date对象
 	 * 
 	 * @param esDate
