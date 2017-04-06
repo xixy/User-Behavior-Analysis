@@ -94,9 +94,10 @@ public class DateUtilTest {
 	 */
 	@Test
 	public void testGetSharpTimeInHour() {
-		Date date = new Date();
+		@SuppressWarnings("deprecation")
+		Date date = new Date("Tue Mar 14 08:38:15 CST 2017");
 		Date date1 = DateUtil.getSharpTimeInHour(date);
-		if (date1.after(date))
+		if (!String.valueOf(date1.getTime()).endsWith("00000000"))
 			fail("GetSharpTimeInHour() failed");
 	}
 
@@ -106,7 +107,9 @@ public class DateUtilTest {
 	@Test
 	public void testGetLastMinuteDate() {
 		Date date = new Date();
+		System.out.println(date);
 		Date date1 = DateUtil.getLastMinuteDate(date, 60);
+		System.out.println(date1);
 		long interval = date.getTime() - date1.getTime();
 		if (interval != 60 * 60 * 1000)
 			fail("GetLastMinuteDate failed");

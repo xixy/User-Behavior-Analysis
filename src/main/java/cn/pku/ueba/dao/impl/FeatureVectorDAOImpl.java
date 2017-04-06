@@ -34,8 +34,7 @@ public class FeatureVectorDAOImpl implements FeatureVectorDAO {
 	/**
 	 * (non-Javadoc)
 	 * 
-	 * @see cn.pku.ueba.dao.FeatureVectorDAO#index(cn.pku.ueba.model.feature.
-	 *      FeatureVector)
+	 * @see cn.pku.ueba.dao.FeatureVectorDAO#index(cn.pku.ueba.model.feature.FeatureVector)
 	 */
 	public void index(FeatureVector fv) {
 		// 转化为json对象
@@ -47,5 +46,4 @@ public class FeatureVectorDAOImpl implements FeatureVectorDAO {
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -83,6 +83,8 @@ public class DateUtil {
 	 * 例如2017-04-05 10:03:30.123，应该得到的是2017-04-05 10:02:30.123
 	 * </p>
 	 * 
+	 * @param date
+	 *            起点时刻点
 	 * @param interval
 	 *            分钟数
 	 * @return 标准date对象

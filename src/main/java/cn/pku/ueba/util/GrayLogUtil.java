@@ -104,6 +104,7 @@ public class GrayLogUtil {
 				// 如果需要继续fetch，那么就设置新的filter，然后构建新的search
 				SearchHit hit = response.getHits().getHits()[9999];
 				String timestamp = (String) hit.getSource().get("timestamp");
+				System.out.println(DateUtil.getDateFromESDate(timestamp));
 				// 设置新的时间filter
 				filter1 = QueryBuilders.rangeQuery("timestamp").from(timestamp);
 				searchagain = true;

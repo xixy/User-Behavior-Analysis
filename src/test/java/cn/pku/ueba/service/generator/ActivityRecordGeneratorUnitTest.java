@@ -7,16 +7,46 @@ package cn.pku.ueba.service.generator;
 import static org.junit.Assert.fail;
 
 import java.util.Date;
+import java.util.List;
 
+import org.elasticsearch.action.search.SearchResponse;
+import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  *
  */
+@SuppressWarnings("deprecation")
+@FixMethodOrder(MethodSorters.JVM)
 public class ActivityRecordGeneratorUnitTest {
 
-	ActivityRecordGeneratorUnit unit = new ActivityRecordGeneratorUnit();
+	private static ActivityRecordGeneratorUnit unit = new ActivityRecordGeneratorUnit();
+	private static List<SearchResponse> result = null;
+
+	static {
+
+		// Tue Mar 14 08:38:15 CST 2017
+		unit.date = new Date("Tue Mar 12 19:49:15 CST 2017");
+		unit.generateFilter();
+		result = unit.generateMaterialForAnalysis();
+	}
+
+	/**
+	 * Test method for
+	 * {@link cn.pku.ueba.service.generator.ActivityRecordGeneratorUnit#generateFilter()}
+	 * .
+	 */
+	@Test
+	public void testGenerateFilter() {
+
+		if (!unit.filter.toString().contains("2017-03-13 09:48:00.000"))
+			fail("GenerateFilter failed");
+		if (!unit.filter.toString().contains("2017-03-13 09:49:00.000"))
+			fail("GenerateFilter failed");
+
+	}
 
 	/**
 	 * Test method for
@@ -24,9 +54,18 @@ public class ActivityRecordGeneratorUnitTest {
 	 * .
 	 */
 	@Test
-	@Ignore
 	public void testGenerateMaterialForAnalysis() {
-		fail("Not yet implemented");
+
+		if (result.isEmpty())
+			fail("testGenerateMaterialForAnalysis failed");
+		// System.out.println(result.size());
+		// for (SearchResponse response : result) {
+		// System.out.println(response.getHits().getHits().length);
+		// for (SearchHit hit : response.getHits().getHits()) {
+		// Map<String, Object> source = hit.getSource();
+		// System.out.println(source.get("timestamp"));
+		// }
+		// }
 	}
 
 	/**
@@ -37,24 +76,7 @@ public class ActivityRecordGeneratorUnitTest {
 	@Test
 	@Ignore
 	public void testAnalysis() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for
-	 * {@link cn.pku.ueba.service.generator.ActivityRecordGeneratorUnit#generateFilter()}
-	 * .
-	 */
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testGenerateFilter() {
-		unit.date = new Date("Wed Apr 05 17:10:01 CST 2017");
-		unit.generateFilter();
-		if (!unit.filter.toString().contains("2017-04-06 07:09:00.000"))
-			fail("GenerateFilter failed");
-		if (!unit.filter.toString().contains("2017-04-06 07:10:00.000"))
-			fail("GenerateFilter failed");
-
+		unit.analysis(result);
 	}
 
 }

@@ -96,7 +96,7 @@ public class ActivityRecordGeneratorUnit extends GeneratorUnit {
 	/**
 	 * 生成检索的Filter
 	 * 
-	 * @see cn.pku.ueba.service.generator.GeneratorUnit#getFilter()
+	 * @see cn.pku.ueba.service.generator.GeneratorUnit#generateFilter()
 	 */
 	@Override
 	public QueryBuilder generateFilter() {
