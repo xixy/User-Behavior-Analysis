@@ -21,7 +21,7 @@ public class UserFactory extends EntityFactory {
 	 * 用户id自增
 	 */
 	static int userid = 0;
-	
+
 	private static UserFactory instance;
 
 	public static UserFactory getInstance() {
@@ -38,7 +38,9 @@ public class UserFactory extends EntityFactory {
 	@Override
 	public Entity getEntity() {
 		User user = new User();
-		user.setId(++userid);
+		synchronized (UserFactory.class) {
+			user.setId(++userid);
+		}
 		user.setRiskscore((double) 60);
 		return user;
 	}

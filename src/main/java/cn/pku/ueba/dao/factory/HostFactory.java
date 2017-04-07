@@ -38,7 +38,9 @@ public class HostFactory extends EntityFactory {
 	@Override
 	public Entity getEntity() {
 		Host host = new Host();
-		host.setId(++hostid);
+		synchronized (HostFactory.class) {
+			host.setId(++hostid);
+		}
 		host.setRiskscore((double) 60);
 		return host;
 	}
