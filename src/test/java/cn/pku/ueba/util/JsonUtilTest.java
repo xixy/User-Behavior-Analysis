@@ -6,7 +6,8 @@ package cn.pku.ueba.util;
 
 import org.junit.Test;
 
-import cn.pku.ueba.dao.factory.HostFactoryTest;
+import cn.pku.ueba.dao.factory.EntityFactoryTest;
+import cn.pku.ueba.dao.factory.UserFactoryTest;
 
 /**
  *
@@ -20,7 +21,7 @@ public class JsonUtilTest {
 	 */
 	@Test
 	public void testGetJsonFromModelInstance() {
-		new HostFactoryTest().testGetJsonFromHost();
+		new EntityFactoryTest().testGetJsonFromEntity();
 	}
 
 	/**
@@ -30,7 +31,7 @@ public class JsonUtilTest {
 	 */
 	@Test
 	public void testGetModelInstanceFromJson() {
-		new HostFactoryTest().testGetHostFromJson();
+		new UserFactoryTest().testGetEntityFromJson();
 	}
 
 }

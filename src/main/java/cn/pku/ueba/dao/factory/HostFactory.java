@@ -1,61 +1,58 @@
 /**
  * @author xixy10@foxmail.com
- * @version V0.1 2017年3月23日 下午7:10:24
+ * @version V0.1 2017年4月7日 上午10:31:10
  */
 package cn.pku.ueba.dao.factory;
 
 import java.util.Map;
 
+import cn.pku.ueba.model.Entity;
 import cn.pku.ueba.model.Host;
 import cn.pku.ueba.util.JsonUtil;
 
 /**
  * HostFactory
+ * 
+ * @author xixy10@foxmail.com
  */
-public class HostFactory {
+public class HostFactory extends EntityFactory {
+
 	/**
 	 * 主机id自增
 	 */
 	static int hostid = 0;
 
+	private static HostFactory instance;
+
+	public static HostFactory getInstance() {
+		if (instance == null)
+			instance = new HostFactory();
+		return instance;
+	}
+
 	/**
-	 * 新建主机对象
+	 * (non-Javadoc)
 	 * 
-	 * @param name
-	 *            主机名称
-	 * @return 主机对象
+	 * @see cn.pku.ueba.dao.factory.EntityFactory#getEntity()
 	 */
-	public synchronized static Host getHost(String name) {
+	@Override
+	public Entity getEntity() {
 		Host host = new Host();
 		host.setId(++hostid);
-		host.setName(name);
 		host.setRiskscore((double) 60);
 		return host;
 	}
 
 	/**
-	 * 将Host实例转化为Json
+	 * (non-Javadoc)
 	 * 
-	 * @param host
-	 *            Host实例
-	 * @return Json格式数据
+	 * @see cn.pku.ueba.dao.factory.EntityFactory#getEntityFromJson(java.util.Map,
+	 *      cn.pku.ueba.model.EntityType)
 	 */
-	public static Map<String, Object> getJsonFromHost(Host host) {
-		return JsonUtil.getJsonFromModelInstance(host);
-
-	}
-
-	/**
-	 * 将Json转化为Host实例对象
-	 * 
-	 * @param json
-	 *            Json格式数据
-	 * @return Host实例对象
-	 */
-	public static Host getHostFromJson(Map<String, Object> json) {
+	@Override
+	public Entity getEntityFromJson(Map<String, Object> json) {
 		Object obj = JsonUtil.getModelInstanceFromJson(json, Host.class);
 		return (Host) obj;
-
 	}
 
 }

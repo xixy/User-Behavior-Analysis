@@ -43,7 +43,7 @@ public class HostDAOImpl implements HostDAO {
 	 */
 	public void indexHost(Host host) {
 		// 转化为json对象
-		Map<String, Object> json = HostFactory.getJsonFromHost(host);
+		Map<String, Object> json = HostFactory.getInstance().getJsonFromEntity(host);
 		// 插入到graylog中
 		try {
 			GrayLogUtil.index(Configure.getIndex(), Configure.getHosttype(), json);
@@ -71,7 +71,7 @@ public class HostDAOImpl implements HostDAO {
 			if (response.getHits().getHits().length > 0)
 				for (SearchHit hit : response.getHits().getHits()) {
 					Map<String, Object> fields = hit.getSource();
-					host = HostFactory.getHostFromJson(fields);
+					host = (Host) HostFactory.getInstance().getEntityFromJson(fields);
 					break;
 				}
 

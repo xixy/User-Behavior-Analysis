@@ -33,7 +33,7 @@ public class UserDAOImpl implements UserDAO {
 
 	public void indexUser(User user) {
 		// 插入到graylog中
-		Map<String, Object> json = UserFactory.getJsonFromUser(user);
+		Map<String, Object> json = UserFactory.getInstance().getJsonFromEntity(user);
 
 		try {
 			GrayLogUtil.index(Configure.getIndex(), Configure.getUsertype(), json);
@@ -57,7 +57,7 @@ public class UserDAOImpl implements UserDAO {
 			if (response.getHits().getHits().length > 0)
 				for (SearchHit hit : response.getHits().getHits()) {
 					Map<String, Object> fields = hit.getSource();
-					user = UserFactory.getUserFromJson(fields);
+					user = (User) UserFactory.getInstance().getEntityFromJson(fields);
 					break;
 				}
 

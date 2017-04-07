@@ -1,61 +1,58 @@
 /**
  * @author xixy10@foxmail.com
- * @version V0.1 2017年3月23日 下午7:10:24
+ * @version V0.1 2017年4月7日 上午10:33:03
  */
 package cn.pku.ueba.dao.factory;
 
 import java.util.Map;
 
+import cn.pku.ueba.model.Entity;
 import cn.pku.ueba.model.User;
 import cn.pku.ueba.util.JsonUtil;
 
 /**
- * 用户Factory
+ * UserFactory
+ * 
+ * @author xixy10@foxmail.com
  */
-public class UserFactory {
+public class UserFactory extends EntityFactory {
+
 	/**
 	 * 用户id自增
 	 */
 	static int userid = 0;
+	
+	private static UserFactory instance;
+
+	public static UserFactory getInstance() {
+		if (instance == null)
+			instance = new UserFactory();
+		return instance;
+	}
 
 	/**
-	 * 返回一个用户对象
+	 * (non-Javadoc)
 	 * 
-	 * @param name
-	 *            用户名称
-	 * @return 信息不完整、需要填充的用户对象
+	 * @see cn.pku.ueba.dao.factory.EntityFactory#getEntity()
 	 */
-	public synchronized static User getUser(String name) {
+	@Override
+	public Entity getEntity() {
 		User user = new User();
 		user.setId(++userid);
-		user.setName(name);
 		user.setRiskscore((double) 60);
 		return user;
 	}
 
 	/**
-	 * 将User实例转化为Json
+	 * (non-Javadoc)
 	 * 
-	 * @param user
-	 *            User实例
-	 * @return Json格式数据
+	 * @see cn.pku.ueba.dao.factory.EntityFactory#getEntityFromJson(java.util.Map,
+	 *      cn.pku.ueba.model.EntityType)
 	 */
-	public static Map<String, Object> getJsonFromUser(User user) {
-		return JsonUtil.getJsonFromModelInstance(user);
-
-	}
-
-	/**
-	 * 将Json转化为User实例对象
-	 * 
-	 * @param json
-	 *            Json格式数据
-	 * @return User实例对象
-	 */
-	public static User getUserFromJson(Map<String, Object> json) {
+	@Override
+	public Entity getEntityFromJson(Map<String, Object> json) {
 		Object obj = JsonUtil.getModelInstanceFromJson(json, User.class);
 		return (User) obj;
-
 	}
 
 }
