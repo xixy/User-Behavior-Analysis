@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.elasticsearch.action.count.CountResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -96,6 +97,29 @@ public class GrayLogUtilTest {
 
 		}
 	}
+	
+	/**
+	 * Test method for
+	 * {@link cn.pku.ueba.util.GrayLogUtil#searchByScroll(java.lang.String, java.lang.String, org.elasticsearch.action.search.SearchType, org.elasticsearch.index.query.QueryBuilder, org.elasticsearch.index.query.QueryBuilder)}
+	 * .
+	 * 
+	 * @throws UnknownHostException
+	 */
+	@Test
+	public void testSearchByScroll() throws UnknownHostException {
+		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
+		QueryBuilder filter = QueryBuilders.rangeQuery("timestamp").format(DateUtil.dateiso8601.toPattern())
+				.gt(DateUtil.getLastDayESDate(100));
+		List<SearchResponse> responseList = GrayLogUtil.searchByScroll(Configure.getIndex(), 
+				Configure.getRawlogtype(),SearchType.DFS_QUERY_THEN_FETCH, queryterm, filter);
+		int i=0;
+		for (SearchResponse response : responseList) {
+			System.out.println(response.getHits().getHits().length+" "+(++i));
+			if (response.getHits().getHits().length == 0)
+				fail("GrayLogUtil cannont search");
+
+		}
+	}
 
 	/**
 	 * Test method for
@@ -121,6 +145,19 @@ public class GrayLogUtilTest {
 			else
 				fail("GrayLogUtil cannot delete");
 		}
+	}
+	
+	@Test
+	public void testCount() {
+		QueryBuilder queryterm = QueryBuilders.matchAllQuery();
+		try{
+			CountResponse count = GrayLogUtil.count(Configure.getIndex(), Configure.getRawlogtype(),queryterm);
+			System.out.println(count.getCount());
+		}catch (UnknownHostException e) {
+			fail("GrayLogUtil cannot count");
+			e.printStackTrace();
+		}
+			
 	}
 
 }

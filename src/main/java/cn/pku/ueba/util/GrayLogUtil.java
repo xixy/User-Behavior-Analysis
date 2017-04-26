@@ -10,14 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.elasticsearch.action.count.CountResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchScrollRequestBuilder;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -56,9 +59,6 @@ public class GrayLogUtil {
 
 	}
 
-	/*
-	 * 查询语句
-	 */
 	/**
 	 * 查询语句
 	 * 
@@ -151,7 +151,72 @@ public class GrayLogUtil {
 		return response;
 
 	}
+	
+	/**
+	 * 删除语句
+	 * 
+	 * @param index
+	 *            index
+	 * @param type
+	 *            type
+	 * @param queryBuilder
+	 *            搜索语句
+	 * @return 统计结果
+	 */
+	public static CountResponse count(String index, String type,QueryBuilder queryBuilder) throws UnknownHostException{ 
+		CountResponse response = getClient().prepareCount(index)
+				.setQuery(queryBuilder).get();
+		return response;
+	}
 
+	/**
+	 * 查询语句
+	 * 
+	 * @param index
+	 *            index
+	 * @param type
+	 *            type
+	 * @param searchtype
+	 *            searchtype
+	 * @param queryterm
+	 *            搜索语句
+	 * @param filter
+	 *            过滤器
+	 * @return 返回搜索结果，作为一个SearchResponse的List
+	 * @throws UnknownHostException
+	 *             主机查找失败
+	 */
+	public static List<SearchResponse> searchByScroll(String index, String type, SearchType searchtype, QueryBuilder queryterm,QueryBuilder filter) throws UnknownHostException {
+        // 执行
+        SearchResponse searchResponse = getClient().prepareSearch(index).setTypes(type).setSearchType(searchtype).setQuery(queryterm)
+				.setPostFilter(filter).setFrom(0).setExplain(true).setScroll(new TimeValue(60000)).setSize(10000)
+				.get();
+        String scrollId = searchResponse.getScrollId();
+        System.out.println("--------- searchByScroll scrollID {"+scrollId+"}");
+
+        TimeValue timeValue = new TimeValue(60000);
+        List<SearchResponse> result = new ArrayList<SearchResponse>();
+        SearchScrollRequestBuilder searchScrollRequestBuilder;
+        SearchResponse response;
+        // 结果
+        while (true) {
+            searchScrollRequestBuilder = client.prepareSearchScroll(scrollId);
+            // 重新设定滚动时间
+            searchScrollRequestBuilder.setScroll(timeValue);
+            // 请求
+            response = searchScrollRequestBuilder.get();
+            result.add(response);
+            // 每次返回下一个批次结果 直到没有结果返回时停止 即hits数组空时
+            if (response.getHits().getHits().length == 0) {
+                break;
+            } // if
+            // 只有最近的滚动ID才能被使用
+            scrollId = response.getScrollId();
+        } // while	
+		return result;
+	}
+	
+	
 	/**
 	 * 打印查询结果，用于调试
 	 * 
@@ -179,5 +244,6 @@ public class GrayLogUtil {
 	public static void setClient(Client client) {
 		GrayLogUtil.client = client;
 	}
+	
 
 }
