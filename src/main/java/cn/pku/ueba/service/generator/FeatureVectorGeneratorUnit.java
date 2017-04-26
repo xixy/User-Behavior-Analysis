@@ -5,15 +5,23 @@
 package cn.pku.ueba.service.generator;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
 
 import cn.pku.ueba.configure.Configure;
+import cn.pku.ueba.dao.factory.UserFactory;
+import cn.pku.ueba.model.User;
+import cn.pku.ueba.model.activity.ActivityRecord;
+import cn.pku.ueba.model.activity.ActivityType;
 import cn.pku.ueba.util.DateUtil;
 import cn.pku.ueba.util.GrayLogUtil;
 
@@ -31,7 +39,7 @@ public class FeatureVectorGeneratorUnit extends GeneratorUnit {
 	 */
 	@SuppressWarnings("deprecation")
 	public void run() {
-		// 得到该时刻的分钟数
+		// 得到该时刻的小时数
 		int hour = date.getHours();
 		while (true) {
 			date = new Date();
@@ -78,8 +86,42 @@ public class FeatureVectorGeneratorUnit extends GeneratorUnit {
 	 * 
 	 * @see cn.pku.ueba.service.generator.GeneratorUnit#analysis(java.util.List)
 	 */
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public void analysis(List<SearchResponse> responseList) {
+		Map<User, HashMap<ActivityType, List<ActivityRecord>>> userStatistic = new HashMap<User, HashMap<ActivityType, List<ActivityRecord>>>();
+		// 1 遍历过去一个小时的用户活动，生成用户为key、该用户活动为value的一个结构
+		for (SearchResponse response : responseList) {
+			for (SearchHit hit : response.getHits().hits()) {
+				Map<String, Object> source = hit.getSource();
+				Map<String, Object> userJson = (Map<String, Object>) source.get("user");
+				User user = (User) UserFactory.getInstance().getEntityFromJson(userJson);
+				// 分类存储该user的所有活动
+				/***
+				 * 提取活动、活动类型todo
+				 */
+				ActivityType type = null;
+				ActivityRecord ar = null;
+				// 如果不包含这个user
+				if (!userStatistic.containsKey(user)) {
+					userStatistic.put(user, new HashMap<ActivityType, List<ActivityRecord>>());
+				}
+				HashMap<ActivityType, List<ActivityRecord>> activityRecordMap = userStatistic.get(user);
+				// 如果这个user没有这种活动
+				if (!activityRecordMap.containsKey(type)) {
+					activityRecordMap.put(type, new ArrayList<ActivityRecord>());
+				}
+				// 插入活动
+				activityRecordMap.get(type).add(ar);
+			}
+
+		}
+		// 2 生成过去一个小时的feature
+		// 3 根据时间来确定是否需要合并
+		// 如果是0点的时间，就需要统计过去23小时+60分钟
+		if (date.getHours() == 0) {
+
+		}
 
 	}
 
